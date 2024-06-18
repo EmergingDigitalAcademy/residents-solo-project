@@ -125,30 +125,6 @@ router.put("/housing", rejectUnauthenticated, async (req, res) => {
     }
 })
 
-
-// router.put('/transaction/:id', rejectUnauthenticated, async (req, res) => {
-//     console.log('/transaction/residents');
-//     console.log('req.params.id', req.params.id);
-//     console.log('is authenticated?', req.isAuthenticated);
-//     console.log('user', req.user);
-//     console.log(req.body);
-
-//     try{
-//         await pool.query(
-//             `
-//             UPDATE "transactions_log"
-//             SET "resident_id" = $2, "date" = NOW()
-//             WHERE "log_type" = $1;`,
-//             [req.body.log_type, req.body.resident_id]
-//         );
-//         res.sendStatus(201);
-//     } catch (err) {
-//         console.error(err);
-//         res.sendStatus(500);
-//     }
-// })
-
-//If using Junction Table!!
 router.post('/transaction', rejectUnauthenticated, async (req, res) => {
     console.log('/transaction/residents');
     console.log('is authenticated?', req.isAuthenticated());
@@ -176,16 +152,6 @@ router.post('/transaction', rejectUnauthenticated, async (req, res) => {
             `,
             [transaction_id, resident_id]
         );
-
-        // await pool.query(
-        //     `
-        //     UPDATE "transaction_residents"
-        //     SET "date" = NOW()
-        //     FROM "transactions_log"
-        //     WHERE "transactions_log"."id" = "transaction_residents"."transaction_id" AND "date" = NULL AND "transaction_id" = $1;
-        //     `,
-        //     [transaction_id]
-        // );
 
         res.sendStatus(201);
     } catch (err) {
