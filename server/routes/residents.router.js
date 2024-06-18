@@ -51,7 +51,7 @@ router.post("/", rejectUnauthenticated, async (req, res) => {
         req.body.birthday,
         req.body.term
       ];
-    const result = await pool.query(insertResidentQuery, insertResidentValues);
+    await pool.query(insertResidentQuery, insertResidentValues);
     // const result2 = await pool.query(insertHousingQuery, insertHousingValues);
     res.sendStatus(201);
   } catch (err) {
@@ -60,24 +60,21 @@ router.post("/", rejectUnauthenticated, async (req, res) => {
   }
 });
 
-router.post("/resident_allergies/:id", rejectUnauthenticated, async (req, res) => {
-    console.log('/residents/allergies/:id POST route');
+router.post("/resident_allergies", rejectUnauthenticated, async (req, res) => {
+    console.log('/residents/residents_allergies POST route');
     console.log('req params id log', req.params.id);
     console.log('is authenticated?', req.isAuthenticated);
     console.log('user', req.user);
-    console.log('req body allergies_id[0]', req.body.allergies_id[0])
+    console.log('req body allergies_id[0]', req.body.allergies_id)
 
     try{
+        
           const insertAllergies = await pool.query(`
             INSERT INTO "resident_allergies"
             ("resident_id", "allergies_id")
             VALUES
-            ($1, $2);`, [req.params.id, req.body.allergies_id[0]]
+            ($1, $2);`, [req.body.resident_id, req.body.allergies_id]
           )
-            // const insertAllergiesValues = [
-            //     req.params.id,
-            //     req.body.allergies_id[0]
-            // ]
 
             res.send(insertAllergies.rows[0]);
             // const result = await pool.query(insertAllergiesQuery, insertAllergiesValues);

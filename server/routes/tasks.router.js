@@ -19,26 +19,54 @@ router.get('/', rejectUnauthenticated, (req, res) => {
     });
 });
 
-router.put('/:id', rejectUnauthenticated, async (req, res) => {
-    console.log('/tasks/:id PUT route')
-    console.log('req params id log', req.params.id);
+router.post('/', rejectUnauthenticated, async (req, res) => {
+    console.log('/tasks POST route')
+    // console.log('req params id log', req.params.id);
     console.log('is authenticated?', req.isAuthenticated);
     console.log('user', req.user);
 
-    try{
-        const result = await pool.query(
-            `
-            UPDATE "tasks"
-            SET "assistance_id" = $1, "date_time_completed" = NOW(), "resident_id" = $3
-            FROM "residents"
-            WHERE "tasks"."resident_id" = "residents"."id" AND "residents"."id" = $2;`,
-            [req.body.assistance_id, req.params.id, req.body.resident_id]
-        );
-        res.send(result.rows[0]);
+    try {
+        // Now handle the genre reference:
+        const insertTasksQueries = `
+                INSERT INTO "tasks" 
+                  ("users_id", "resident_id" )
+                  VALUES
+                  ($1, $2);
+              `;
+        const insertTasksValues = [
+          req.user.id,
+          req.body.resident_id,
+        ];
+      const result = await pool.query(insertTasksQueries, insertTasksValues);
+      // const result2 = await pool.query(insertHousingQuery, insertHousingValues);
+      res.sendStatus(201);
     } catch (err) {
-        console.error(err);
-        res.sendStatus(500);
+      console.log(err);
+      res.sendStatus(500);
     }
+
+    router.put('/:id', rejectUnauthenticated, async (req, res) => {
+        console.log('/tasks PUT route');
+        console.log('req params id log', req.params.id);
+        console.log('is authenticated?', req.isAuthenticated);
+        console.log('user', req.user);
+    
+        try{
+            const result = await pool.query(
+                `
+                UPDATE "tasks"
+                SET "" = $1
+                FROM ""
+                WHERE ;`,
+                [req.body]
+            );
+            res.send(result.rows[0]);
+        } catch (err) {
+            console.error(err);
+            res.sendStatus(500);
+        }
+    })
+
 })
 
 
