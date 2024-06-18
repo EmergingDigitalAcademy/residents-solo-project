@@ -25,47 +25,20 @@ router.post('/', rejectUnauthenticated, async (req, res) => {
     console.log('is authenticated?', req.isAuthenticated);
     console.log('user', req.user);
 
-    try {
-        // Now handle the genre reference:
-        const insertTasksQueries = `
-                INSERT INTO "tasks" 
-                  ("users_id", "resident_id" )
-                  VALUES
-                  ($1, $2);
-              `;
-        const insertTasksValues = [
-          req.user.id,
-          req.body.resident_id,
-        ];
-      const result = await pool.query(insertTasksQueries, insertTasksValues);
-      // const result2 = await pool.query(insertHousingQuery, insertHousingValues);
-      res.sendStatus(201);
-    } catch (err) {
-      console.log(err);
-      res.sendStatus(500);
-    }
+    try{
+        const result = await pool.query(`
+          INSERT INTO "tasks_residents"
+          ("resident_id", "tasks_id", "user_id", "assistance_id", "date_time_completed")
+          VALUES
+          ($1, $2, $3, $4, NOW());`, [req.body.resident_id, req.body.tasks_id, req.user.id, req.body.assistance_id]
+        )
 
-    router.put('/:id', rejectUnauthenticated, async (req, res) => {
-        console.log('/tasks PUT route');
-        console.log('req params id log', req.params.id);
-        console.log('is authenticated?', req.isAuthenticated);
-        console.log('user', req.user);
-    
-        try{
-            const result = await pool.query(
-                `
-                UPDATE "tasks"
-                SET "" = $1
-                FROM ""
-                WHERE ;`,
-                [req.body]
-            );
-            res.send(result.rows[0]);
-        } catch (err) {
-            console.error(err);
-            res.sendStatus(500);
-        }
-    })
+          res.send(result.rows[0]);
+          // const result = await pool.query(insertAllergiesQuery, insertAllergiesValues);
+  } catch (err) {
+      console.error(err);
+      res.sendStatus(500);
+  }
 
 })
 
