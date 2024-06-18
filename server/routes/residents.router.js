@@ -60,38 +60,6 @@ router.post("/", rejectUnauthenticated, async (req, res) => {
   }
 });
 
-router.post("/housing/:id", rejectUnauthenticated, async (req, res) => {
-    console.log('/residents/housing/:id POST route');
-    console.log('req params id log', req.params.id);
-    console.log('is authenticated?', req.isAuthenticated);
-    console.log('user', req.user);
-
-    try{
-          const insertHousing = await pool.query( `
-            INSERT INTO "housing"
-            ("resident_id", "assigned_date", "unassigned_date")
-            VALUES
-            ($1, $2, $3);`, [
-                req.params.id,
-                req.body.assigned_date, 
-                req.body.unassigned_date]
-          )
-            // const insertHousingValues = [
-            //     req.params.id,
-            //     req.body.room_number,
-            //     req.body.floor,
-            //     req.body.hall,
-            //     req.body.assigned_date,
-            //     req.body.unassigned_date
-            // ]
-
-            res.send(insertHousing.rows[0]);
-    } catch (err) {
-        console.error(err);
-        res.sendStatus(500);
-    }
-})
-
 router.post("/resident_allergies/:id", rejectUnauthenticated, async (req, res) => {
     console.log('/residents/allergies/:id POST route');
     console.log('req params id log', req.params.id);
@@ -127,15 +95,26 @@ router.put("/housing", rejectUnauthenticated, async (req, res) => {
     console.log('user', req.user);
     console.log(req.body);
 
+    //first query:
+    /*
+      `
+            UPDATE "housing"
+            SET "resident_id" = NULL
+            WHERE "resident_id" = $1;`
+    */
     //first thing to do: check if room_number has a resident_id already assigned
     // if it does, then first find the room_number that has the resident currently assinged to.
     // set the resident_id to NULL.
-
     try{
+        await pool.query(`
+        UPDATE "housing"
+        SET "resident_id" = NULL
+        WHERE "resident_id" = $1;`, [req.body.resident_id]);
+
         await pool.query(
             `
             UPDATE "housing"
-            SET "resident_id" = $2, "assigned_date" = NOW() 
+            SET "resident_id" = $2
             WHERE "room_number" = $1;`,
             [req.body.room_number, req.body.resident_id]
         );
@@ -146,4 +125,111 @@ router.put("/housing", rejectUnauthenticated, async (req, res) => {
     }
 })
 
+
+// router.put('/transaction/:id', rejectUnauthenticated, async (req, res) => {
+//     console.log('/transaction/residents');
+//     console.log('req.params.id', req.params.id);
+//     console.log('is authenticated?', req.isAuthenticated);
+//     console.log('user', req.user);
+//     console.log(req.body);
+
+//     try{
+//         await pool.query(
+//             `
+//             UPDATE "transactions_log"
+//             SET "resident_id" = $2, "date" = NOW()
+//             WHERE "log_type" = $1;`,
+//             [req.body.log_type, req.body.resident_id]
+//         );
+//         res.sendStatus(201);
+//     } catch (err) {
+//         console.error(err);
+//         res.sendStatus(500);
+//     }
+// })
+
+//If using Junction Table!!
+router.post('/transaction', rejectUnauthenticated, async (req, res) => {
+    console.log('/transaction/residents');
+    console.log('is authenticated?', req.isAuthenticated());
+    console.log('user', req.user);
+    console.log(req.body);
+
+    try {
+        const { transaction_id, resident_id } = req.body;
+
+        // Insert into transaction_residents
+        await pool.query(
+            `
+            INSERT INTO "transaction_residents" ("transaction_id", "resident_id")
+            VALUES ($1, $2)
+            ON CONFLICT DO NOTHING;
+            `,
+            [transaction_id, resident_id]
+        );
+
+        await pool.query(
+            `
+            UPDATE "transaction_residents"
+            SET "date" = NOW()
+            WHERE "transaction_id" = $1 AND "resident_id" = $2 AND "date" IS NULL;
+            `,
+            [transaction_id, resident_id]
+        );
+
+        // await pool.query(
+        //     `
+        //     UPDATE "transaction_residents"
+        //     SET "date" = NOW()
+        //     FROM "transactions_log"
+        //     WHERE "transactions_log"."id" = "transaction_residents"."transaction_id" AND "date" = NULL AND "transaction_id" = $1;
+        //     `,
+        //     [transaction_id]
+        // );
+
+        res.sendStatus(201);
+    } catch (err) {
+        console.error(err);
+        res.sendStatus(500);
+    }
+});
+
 module.exports = router;
+
+
+
+module.exports = router;
+
+
+
+// router.post("/housing/:id", rejectUnauthenticated, async (req, res) => {
+//     console.log('/residents/housing/:id POST route');
+//     console.log('req params id log', req.params.id);
+//     console.log('is authenticated?', req.isAuthenticated);
+//     console.log('user', req.user);
+
+//     try{
+//           const insertHousing = await pool.query( `
+//             INSERT INTO "housing"
+//             ("resident_id", "assigned_date", "unassigned_date")
+//             VALUES
+//             ($1, $2, $3);`, [
+//                 req.params.id,
+//                 req.body.assigned_date, 
+//                 req.body.unassigned_date]
+//           )
+//             // const insertHousingValues = [
+//             //     req.params.id,
+//             //     req.body.room_number,
+//             //     req.body.floor,
+//             //     req.body.hall,
+//             //     req.body.assigned_date,
+//             //     req.body.unassigned_date
+//             // ]
+
+//             res.send(insertHousing.rows[0]);
+//     } catch (err) {
+//         console.error(err);
+//         res.sendStatus(500);
+//     }
+// })
