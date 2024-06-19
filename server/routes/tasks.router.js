@@ -19,7 +19,7 @@ router.get('/', rejectUnauthenticated, (req, res) => {
     });
 });
 
-router.post('/', rejectUnauthenticated, async (req, res) => {
+router.put('/', rejectUnauthenticated, async (req, res) => {
     console.log('/tasks POST route')
     // console.log('req params id log', req.params.id);
     console.log('is authenticated?', req.isAuthenticated);
@@ -27,7 +27,7 @@ router.post('/', rejectUnauthenticated, async (req, res) => {
 
     try{
         const result = await pool.query(`
-          INSERT INTO "tasks_residents"
+          UPDATE "tasks_residents"
           ("resident_id", "tasks_id", "user_id", "assistance_id", "date_time_completed")
           VALUES
           ($1, $2, $3, $4, NOW());`, [req.body.resident_id, req.body.tasks_id, req.user.id, req.body.assistance_id]
@@ -41,6 +41,34 @@ router.post('/', rejectUnauthenticated, async (req, res) => {
   }
 
 })
+
+
+
+
+
+
+// router.post('/', rejectUnauthenticated, async (req, res) => {
+//     console.log('/tasks POST route')
+//     // console.log('req params id log', req.params.id);
+//     console.log('is authenticated?', req.isAuthenticated);
+//     console.log('user', req.user);
+
+//     try{
+//         const result = await pool.query(`
+//           INSERT INTO "tasks_residents"
+//           ("resident_id", "tasks_id", "user_id", "assistance_id", "date_time_completed")
+//           VALUES
+//           ($1, $2, $3, $4, NOW());`, [req.body.resident_id, req.body.tasks_id, req.user.id, req.body.assistance_id]
+//         )
+
+//           res.send(result.rows[0]);
+//           // const result = await pool.query(insertAllergiesQuery, insertAllergiesValues);
+//   } catch (err) {
+//       console.error(err);
+//       res.sendStatus(500);
+//   }
+
+// })
 
 
 

@@ -65,6 +65,20 @@ router.post("/", rejectUnauthenticated, async (req, res) => {
 
     await pool.query(query2, [logType, residentId]);
 
+    //query to create task for a new resident
+    //1. select all task types from task table
+    const taskResult = await pool.query(`SELECT "id" FROM "tasks";`);
+    //2. loop through taskResult
+    // insert into tasks_residents table: 
+    // INSERT INTO "tasks_residents" ("tasks_id", "resident_id", "user_id")
+    // VALUES ($1, $2, $3);
+    taskResult.rows.forEach(async task => {
+        await pool.query(`INSERT INTO "tasks_residents" ("tasks_id", "resident_id", "user_id")
+        VALUES ($1, $2, $3);
+        `, [task.id, residentId, req.user.id])
+    });
+    
+
     res.sendStatus(201);
   } catch (err) {
     console.log(err);
@@ -116,6 +130,15 @@ router.put("/housing", rejectUnauthenticated, async (req, res) => {
   // if it does, then first find the room_number that has the resident currently assinged to.
   // set the resident_id to NULL.
   try {
+
+     //query to creates a log
+     const logType = 3;
+     const prevValueQuery = `SELECT "room_number" FROM "housing" WHERE "resident_id" = $1`;
+     const resultPrev = await pool.query(prevValueQuery, [req.body.resident_id]);
+     console.log('my previous room', resultPrev.rows[0]?.room_number);
+
+     const prevRoom = resultPrev.rows[0]?.room_number ? resultPrev.rows[0].room_number : null;
+
     await pool.query(
       `
         UPDATE "housing"
@@ -132,14 +155,14 @@ router.put("/housing", rejectUnauthenticated, async (req, res) => {
             WHERE "room_number" = $1;`,
       [req.body.room_number, req.body.resident_id]
     );
-    //query to creates a log
-    const logType = 3;
+    
+    
     const query2 = `
            INSERT INTO "transaction_residents" ("transaction_id", "resident_id", "previous", "current", "date")
-           VALUES ($1, $2, (SELECT "room_number" FROM "housing" WHERE "resident_id" = $3), $4, NOW());
+           VALUES ($1, $2, $3, $4, NOW());
            `;
 
-    await pool.query(query2, [logType, req.body.resident_id, req.body.resident_id, req.body.room_number]);
+    await pool.query(query2, [logType, req.body.resident_id, prevRoom, req.body.room_number]);
     res.sendStatus(201);
   } catch (err) {
     console.error(err);
