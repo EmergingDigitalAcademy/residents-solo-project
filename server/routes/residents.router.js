@@ -74,8 +74,8 @@ router.post("/", rejectUnauthenticated, async (req, res) => {
     // VALUES ($1, $2, $3);
     taskResult.rows.forEach(async task => {
         await pool.query(`INSERT INTO "tasks_residents" ("tasks_id", "resident_id", "user_id")
-        VALUES ($1, $2, $3);
-        `, [task.id, residentId, req.user.id])
+        VALUES ($1, $2, NULL);
+        `, [task.id, residentId])
     });
     
 
@@ -204,8 +204,6 @@ router.post("/transaction", rejectUnauthenticated, async (req, res) => {
     res.sendStatus(500);
   }
 });
-
-module.exports = router;
 
 module.exports = router;
 

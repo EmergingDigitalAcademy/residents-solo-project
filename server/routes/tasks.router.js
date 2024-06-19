@@ -27,10 +27,10 @@ router.put('/', rejectUnauthenticated, async (req, res) => {
 
     try{
         const result = await pool.query(`
-          UPDATE "tasks_residents"
-          ("resident_id", "tasks_id", "user_id", "assistance_id", "date_time_completed")
-          VALUES
-          ($1, $2, $3, $4, NOW());`, [req.body.resident_id, req.body.tasks_id, req.user.id, req.body.assistance_id]
+        UPDATE "tasks_residents"
+        SET "assistance_id" = $4, "date_time_completed" = NOW(), "user_id" = $3
+        WHERE "resident_id" = $1 AND "tasks_id" = $2;
+          `, [req.body.resident_id, req.body.tasks_id, req.user.id, req.body.assistance_id]
         )
 
           res.send(result.rows[0]);
