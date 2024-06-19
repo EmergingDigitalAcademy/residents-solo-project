@@ -21,6 +21,10 @@ import LoginPage from '../LoginPage/LoginPage';
 import RegisterPage from '../RegisterPage/RegisterPage';
 
 import './App.css';
+import ActiveResidents from '../ActiveResidents/ActiveResidents';
+import ResidentInfo from '../ResidentInfo/ResidentInfo';
+import AdmitResident from '../AdmitResident/AdmitResident';
+import 'bootstrap/dist/css/bootstrap.min.css';
 
 function App() {
   const dispatch = useDispatch();
@@ -58,6 +62,27 @@ function App() {
             path="/user"
           >
             <UserPage />
+          </ProtectedRoute>
+
+          <ProtectedRoute
+            exact
+            path="/residents"
+          >
+            <ActiveResidents />
+          </ProtectedRoute>
+
+          <ProtectedRoute
+            exact
+            path="/tasks"
+          >
+            <ResidentInfo />
+          </ProtectedRoute>
+
+          <ProtectedRoute
+            exact
+            path="/residents/admit"
+          >
+            <AdmitResident />
           </ProtectedRoute>
 
           <ProtectedRoute

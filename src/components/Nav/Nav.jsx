@@ -10,7 +10,7 @@ function Nav() {
   return (
     <div className="nav">
       <Link to="/home">
-        <h2 className="nav-title">Prime Solo Project</h2>
+        <h2 className="nav-title">Resident Care App</h2>
       </Link>
       <div>
         {/* If no user is logged in, show these links */}
@@ -24,6 +24,10 @@ function Nav() {
         {/* If a user is logged in, show these links */}
         {user.id && (
           <>
+            <Link className="navLink" to="/residents">
+              Active Residents
+            </Link>
+
             <Link className="navLink" to="/user">
               Home
             </Link>
@@ -33,6 +37,14 @@ function Nav() {
             </Link>
 
             <LogOutButton className="navLink" />
+          </>
+        )}
+
+        {user.role === 'admin' && (
+          <>
+            <Link className="navLink" to="/residents/admit">
+              Admit Resident
+            </Link>
           </>
         )}
 

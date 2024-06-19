@@ -3,13 +3,13 @@ const router = express.Router();
 const pool = require('../modules/pool');
 const { rejectUnauthenticated } = require('../modules/authentication-middleware');
 
+
+//THIS WORKS
 router.get('/', rejectUnauthenticated, (req, res) => {
     console.log('/tasks GET route');
     
 
-    let queryText = `SELECT * FROM "tasks"
-    LEFT OUTER JOIN "assistance"
-    ON "assistance"."id" = "tasks"."assistance_id";
+    let queryText = `SELECT * FROM "tasks";
     `;
     pool.query(queryText).then((result) => {
         res.send(result.rows);
@@ -19,8 +19,9 @@ router.get('/', rejectUnauthenticated, (req, res) => {
     });
 });
 
+//THIS WORKS
 router.put('/', rejectUnauthenticated, async (req, res) => {
-    console.log('/tasks POST route')
+    console.log('/tasks PUT route')
     // console.log('req params id log', req.params.id);
     console.log('is authenticated?', req.isAuthenticated);
     console.log('user', req.user);

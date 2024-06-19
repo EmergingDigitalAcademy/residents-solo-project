@@ -5,19 +5,22 @@ const {
   rejectUnauthenticated,
 } = require("../modules/authentication-middleware");
 
+
+//THIS WORKS
 router.get("/", rejectUnauthenticated, (req, res) => {
   console.log("/resident GET route");
   console.log("is authenticated?", req.isAuthenticated());
   console.log("user", req.user);
   let queryText = `SELECT "image", "first_name", "last_name", "birthday", "term", "status", "discharge_date", "admitted_date", "hall", "floor", "housing"."room_number", 
-    "allergies"."type"
+    STRING_AGG ( "allergies"."type", ', ' ) AS "allergies"
     FROM "residents"
     LEFT OUTER JOIN "housing"
     ON "housing"."resident_id" = "residents"."id"
     LEFT OUTER JOIN "resident_allergies"
     ON "resident_allergies"."resident_id" = "residents"."id"
     LEFT OUTER JOIN "allergies"
-    ON "resident_allergies"."allergies_id" = "allergies"."id";
+    ON "resident_allergies"."allergies_id" = "allergies"."id"
+    GROUP BY "image", "first_name", "last_name", "birthday", "term", "status", "discharge_date", "admitted_date", "hall", "floor", "housing"."room_number";
     `;
   pool
     .query(queryText)
@@ -30,7 +33,8 @@ router.get("/", rejectUnauthenticated, (req, res) => {
     });
 });
 
-router.post("/", rejectUnauthenticated, async (req, res) => {
+//THIS WORKS
+router.post("/admit", rejectUnauthenticated, async (req, res) => {
   console.log(req.body);
   console.log("/residents POST route");
   console.log("is authenticated", req.isAuthenticated());
@@ -86,6 +90,7 @@ router.post("/", rejectUnauthenticated, async (req, res) => {
   }
 });
 
+//THIS WORKS
 router.post("/resident_allergies", rejectUnauthenticated, async (req, res) => {
   console.log("/residents/residents_allergies POST route");
   console.log("req params id log", req.params.id);
@@ -111,6 +116,7 @@ router.post("/resident_allergies", rejectUnauthenticated, async (req, res) => {
   }
 });
 
+//THIS WORKS
 router.put("/housing", rejectUnauthenticated, async (req, res) => {
   console.log("/residents/housing PUT route");
   // req.body should be:  {room_number: '2', resident_id: '32'}
@@ -170,41 +176,7 @@ router.put("/housing", rejectUnauthenticated, async (req, res) => {
   }
 });
 
-router.post("/transaction", rejectUnauthenticated, async (req, res) => {
-  console.log("/transaction/residents");
-  console.log("is authenticated?", req.isAuthenticated());
-  console.log("user", req.user);
-  console.log(req.body);
-
-  try {
-    const { transaction_id, resident_id } = req.body;
-
-    // Insert into transaction_residents
-    await pool.query(
-      `
-            INSERT INTO "transaction_residents" ("transaction_id", "resident_id")
-            VALUES ($1, $2)
-            ON CONFLICT DO NOTHING;
-            `,
-      [transaction_id, resident_id]
-    );
-
-    await pool.query(
-      `
-            UPDATE "transaction_residents"
-            SET "date" = NOW()
-            WHERE "transaction_id" = $1 AND "resident_id" = $2 AND "date" IS NULL;
-            `,
-      [transaction_id, resident_id]
-    );
-
-    res.sendStatus(201);
-  } catch (err) {
-    console.error(err);
-    res.sendStatus(500);
-  }
-});
-
+//THIS WORKS
 router.put('/archive/:id', rejectUnauthenticated, async (req, res) => {
     console.log('/archive/:id PUT route');
     console.log('is authenticated', req.isAuthenticated());
@@ -273,3 +245,38 @@ module.exports = router;
 //         res.sendStatus(500);
 //     }
 // })
+
+// router.post("/transaction", rejectUnauthenticated, async (req, res) => {
+    //   console.log("/transaction/residents");
+    //   console.log("is authenticated?", req.isAuthenticated());
+    //   console.log("user", req.user);
+    //   console.log(req.body);
+    
+    //   try {
+    //     const { transaction_id, resident_id } = req.body;
+    
+    //     // Insert into transaction_residents
+    //     await pool.query(
+    //       `
+    //             INSERT INTO "transaction_residents" ("transaction_id", "resident_id")
+    //             VALUES ($1, $2)
+    //             ON CONFLICT DO NOTHING;
+    //             `,
+    //       [transaction_id, resident_id]
+    //     );
+    
+    //     await pool.query(
+    //       `
+    //             UPDATE "transaction_residents"
+    //             SET "date" = NOW()
+    //             WHERE "transaction_id" = $1 AND "resident_id" = $2 AND "date" IS NULL;
+    //             `,
+    //       [transaction_id, resident_id]
+    //     );
+    
+    //     res.sendStatus(201);
+    //   } catch (err) {
+    //     console.error(err);
+    //     res.sendStatus(500);
+    //   }
+    // });
