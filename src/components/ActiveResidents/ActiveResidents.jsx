@@ -4,12 +4,12 @@ import { useDispatch } from 'react-redux';
 import Button from 'react-bootstrap/Button';
 import Card from 'react-bootstrap/Card';
 import { useHistory } from 'react-router-dom/cjs/react-router-dom.min';
+import { useParams } from 'react-router-dom/cjs/react-router-dom.min';
 
 function ActiveResidents() {
    const residents = useSelector((store) => store.residentsReducer);
 //    const [newResident, setNewResident] = useState('');
    const dispatch = useDispatch();
-
    const history = useHistory();
 
 //    const handleSubmit = (e) => {
@@ -28,7 +28,7 @@ function ActiveResidents() {
 
          {residents.filter((r) => r.status !== 'Discharged').map((resident, i) => <div key={i}>
          <Card style={{ width: '18rem' }}>
-            <Card.Body onClick={() => {history.push('./tasks')}}>
+            <Card.Body onClick={() => {history.push(`/tasks/${resident.id}`)}}>
                     <Card.Img variant='top' src={resident.image} />
                     <Card.Text>{resident.first_name} {resident.last_name}</Card.Text>
                     <Card.Text></Card.Text>

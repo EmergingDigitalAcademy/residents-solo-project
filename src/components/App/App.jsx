@@ -73,7 +73,7 @@ function App() {
 
           <ProtectedRoute
             exact
-            path="/tasks"
+            path="/tasks/:id"
           >
             <ResidentInfo />
           </ProtectedRoute>

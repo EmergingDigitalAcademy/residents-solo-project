@@ -11,7 +11,7 @@ router.get("/", rejectUnauthenticated, (req, res) => {
   console.log("/resident GET route");
   console.log("is authenticated?", req.isAuthenticated());
   console.log("user", req.user);
-  let queryText = `SELECT "image", "first_name", "last_name", "birthday", "term", "status", "discharge_date", "admitted_date", "hall", "floor", "housing"."room_number", 
+  let queryText = `SELECT "residents"."id", "image", "first_name", "last_name", "birthday", "term", "status", "discharge_date", "admitted_date", "hall", "floor", "housing"."room_number", 
     STRING_AGG ( "allergies"."type", ', ' ) AS "allergies"
     FROM "residents"
     LEFT OUTER JOIN "housing"
@@ -20,7 +20,7 @@ router.get("/", rejectUnauthenticated, (req, res) => {
     ON "resident_allergies"."resident_id" = "residents"."id"
     LEFT OUTER JOIN "allergies"
     ON "resident_allergies"."allergies_id" = "allergies"."id"
-    GROUP BY "image", "first_name", "last_name", "birthday", "term", "status", "discharge_date", "admitted_date", "hall", "floor", "housing"."room_number";
+    GROUP BY "residents"."id", "image", "first_name", "last_name", "birthday", "term", "status", "discharge_date", "admitted_date", "hall", "floor", "housing"."room_number";
     `;
   pool
     .query(queryText)
