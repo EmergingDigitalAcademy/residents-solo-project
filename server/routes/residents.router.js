@@ -205,6 +205,41 @@ router.post("/transaction", rejectUnauthenticated, async (req, res) => {
   }
 });
 
+router.put('/archive/:id', rejectUnauthenticated, async (req, res) => {
+    console.log('/archive/:id PUT route');
+    console.log('is authenticated', req.isAuthenticated());
+
+    try{
+        const logType = 6;
+        await pool.query (
+            `
+                UPDATE "residents"
+                SET "discharge_date" = NOW(), "status" = $2
+                WHERE "id" = $1
+            `, [req.params.id, "Discharged"]
+        )
+
+        await pool.query(
+            `
+              UPDATE "housing"
+              SET "resident_id" = NULL
+              WHERE "resident_id" = $1;`,
+            [req.params.id]
+          );
+
+        const query2 = `
+            INSERT INTO "transaction_residents" ("transaction_id", "resident_id", "date")
+            VALUES ($1, $2, NOW())
+        `;
+        console.log([logType, req.params.id])
+        await pool.query(query2, [logType, req.params.id]);
+        res.sendStatus(201)
+    } catch (err) {
+        console.error(err);
+        res.sendStatus(500);
+      }
+})
+
 module.exports = router;
 
 // router.post("/housing/:id", rejectUnauthenticated, async (req, res) => {
