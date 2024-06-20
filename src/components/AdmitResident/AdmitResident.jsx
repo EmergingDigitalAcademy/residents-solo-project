@@ -5,7 +5,7 @@ import Button from 'react-bootstrap/Button';
 import Card from 'react-bootstrap/Card';
 import { useHistory } from 'react-router-dom/cjs/react-router-dom.min';
 
-function ActiveResidents() {
+function AdmitResident() {
 //    const residents = useSelector((store) => store.residentsReducer);
    const [newResident, setNewResident] = useState('');
    const dispatch = useDispatch();
@@ -56,4 +56,4 @@ function ActiveResidents() {
    </div>
 )}
 
-export default ActiveResidents;
+export default AdmitResident;

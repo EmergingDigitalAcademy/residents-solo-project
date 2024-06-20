@@ -25,6 +25,7 @@ import ActiveResidents from '../ActiveResidents/ActiveResidents';
 import ResidentInfo from '../ResidentInfo/ResidentInfo';
 import AdmitResident from '../AdmitResident/AdmitResident';
 import 'bootstrap/dist/css/bootstrap.min.css';
+import TaskInfo from '../TaskInfo/TaskInfo';
 
 function App() {
   const dispatch = useDispatch();
@@ -73,6 +74,13 @@ function App() {
 
           <ProtectedRoute
             exact
+            path="/residents/admit"
+          >
+            <AdmitResident />
+          </ProtectedRoute>
+
+          <ProtectedRoute
+            exact
             path="/tasks/:id"
           >
             <ResidentInfo />
@@ -80,9 +88,9 @@ function App() {
 
           <ProtectedRoute
             exact
-            path="/residents/admit"
+            path="/residents/:id/tasks/:id"
           >
-            <AdmitResident />
+            <TaskInfo />
           </ProtectedRoute>
 
           <ProtectedRoute
