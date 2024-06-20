@@ -45,6 +45,10 @@ function Nav() {
             <Link className="navLink" to="/residents/admit">
               Admit Resident
             </Link>
+
+            <Link className="navLink" to="/allResidents">
+              All Residents Info
+            </Link>
           </>
         )}
 

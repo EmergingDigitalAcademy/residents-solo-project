@@ -27,6 +27,7 @@ import AdmitResident from '../AdmitResident/AdmitResident';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import TaskInfo from '../TaskInfo/TaskInfo';
 import Housing from '../Housing/Housing';
+import AllResidentsInfo from '../AllResidentsInfo/AllResidentsInfo';
 
 function App() {
   const dispatch = useDispatch();
@@ -71,6 +72,13 @@ function App() {
             path="/residents"
           >
             <ActiveResidents />
+          </ProtectedRoute>
+
+          <ProtectedRoute
+            exact
+            path="/allResidents"
+          >
+            <AllResidentsInfo />
           </ProtectedRoute>
 
           <ProtectedRoute

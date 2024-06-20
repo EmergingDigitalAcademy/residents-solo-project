@@ -4,7 +4,6 @@ import user from './user.reducer';
 import residentsReducer from './residents.reducer';
 import tasksReducer from './tasks.reducer';
 import assistanceReducer from './assistance.reducer';
-import tasksResidents from './tasks_residents.reducer';
 import housingReducer from './housing.reducer';
 // rootReducer is the primary reducer for our entire project
 // It bundles up all of the other reducers so our project can use them.
@@ -18,7 +17,6 @@ const rootReducer = combineReducers({
   residentsReducer,
   tasksReducer,
   assistanceReducer,
-  tasksResidents,
   housingReducer,
 });
 
