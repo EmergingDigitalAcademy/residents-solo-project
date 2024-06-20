@@ -7,6 +7,7 @@ import { useHistory } from 'react-router-dom/cjs/react-router-dom.min';
 import { useParams } from 'react-router-dom/cjs/react-router-dom.min';
 
 function ActiveResidents() {
+    const user = useSelector((store) => store.user);
    const residents = useSelector((store) => store.residentsReducer);
 //    const [newResident, setNewResident] = useState('');
    const dispatch = useDispatch();
@@ -34,6 +35,7 @@ function ActiveResidents() {
                     <Card.Text></Card.Text>
                     <Card.Text>{resident.birthday}</Card.Text>
             </Card.Body>
+            {user.role === 'admin' && <Button onClick={() => history.push(`/residents/housing/${resident.id}`)}>Assign Room</Button>}
          </Card>
          </div>
         )

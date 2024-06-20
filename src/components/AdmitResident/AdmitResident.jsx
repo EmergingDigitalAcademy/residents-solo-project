@@ -22,12 +22,12 @@ function AdmitResident() {
   const handleSubmit = (e) => {
     e.preventDefault();
     console.log('NEW RESIDENT', newResident)
-    // dispatch({
-    //   type: "ADD_RESIDENTS",
-    //   payload: newResident,
-    // });
-    // setNewResident(initialResident);
-    // history.push("/residents");
+    dispatch({
+      type: "ADD_RESIDENTS",
+      payload: newResident,
+    });
+    setNewResident(initialResident);
+    history.push("/residents/housing");
   };
 
   const handleTerm = (event) => {
@@ -38,6 +38,7 @@ function AdmitResident() {
     } else {
       updateResident.term = "long-term";
     }
+    setNewResident(updateResident);
   };
 
   //    useEffect(() => {

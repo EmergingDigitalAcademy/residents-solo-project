@@ -116,6 +116,23 @@ router.post("/resident_allergies", rejectUnauthenticated, async (req, res) => {
   }
 });
 
+router.get("/housing", rejectUnauthenticated, async (req, res) => {
+    console.log("/residents/housing GET route");
+    console.log("is authenticated", req.isAuthenticated);
+    console.log("user", req.user);
+
+    let queryText = `
+    SELECT * FROM "housing" ORDER BY "room_number" ASC;
+    `;
+    pool.query(queryText).then((result) => {
+        res.send(result.rows)
+    })
+    .catch((error) => {
+        console.log(error);
+        res.sendStatus(500);
+      });
+})
+
 //THIS WORKS
 router.put("/housing", rejectUnauthenticated, async (req, res) => {
   console.log("/residents/housing PUT route");
