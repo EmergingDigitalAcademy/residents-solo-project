@@ -215,8 +215,20 @@ router.put('/archive/:id', rejectUnauthenticated, async (req, res) => {
 router.get('/:id/tasks/:id', rejectUnauthenticated, (req, res) => {
     console.log('/residents/:id/tasks/:id GET route');
     console.log(req.params)
+    let queryText = `SELECT * FROM "assistance";`;
+    pool.query(queryText).then((result) => {
+        res.send(result.rows);
+    }).catch((error) => {
+        console.log(error);
+        res.sendStatus(500);
+    });
+});
 
-    let queryText = `SELECT type FROM "assistance";`;
+// assistances
+router.get('/assistances', rejectUnauthenticated, (req, res) => {
+    console.log('/assistances GET route');
+    console.log(req.params)
+    let queryText = `SELECT * FROM "assistance";`;
     pool.query(queryText).then((result) => {
         res.send(result.rows);
     }).catch((error) => {

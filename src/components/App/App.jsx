@@ -88,7 +88,7 @@ function App() {
 
           <ProtectedRoute
             exact
-            path="/residents/:id/tasks/:id"
+            path="/residents/:resident_id/tasks/:tasks_id"
           >
             <TaskInfo />
           </ProtectedRoute>

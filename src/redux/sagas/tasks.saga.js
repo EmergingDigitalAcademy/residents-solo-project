@@ -1,4 +1,4 @@
-import { put, takeLatest } from 'redux-saga/effects';
+import { call, put, takeEvery, takeLatest } from 'redux-saga/effects';
 import axios from 'axios';
 
 function* fetchTasks(action) {
@@ -12,19 +12,25 @@ function* fetchTasks(action) {
 
   function* fetchAssistance(action) {
     try {
-    const response = yield axios.get('/api/residents/:id/tasks/:id');
+        yield console.log(action);
+
+      const response = yield axios.get(`/api/residents/assistances`);
        yield put({type: 'SET_ASSISTANCE', payload: response.data});
     }  catch (error) {
-       console.error(`Error getting assistance`);
+       console.error(`Error getting assistance`, error);
      }
  }
   
   function* updateTasks(action) {
+    const { tasks_id, resident_id } = action.payload;
+    console.log('tasks id updateTasks', tasks_id);
+    console.log('resident id updateTasks', resident_id);
      try {
-        yield axios.post('/api/tasks', action.payload);
+        yield console.log('action payload', action.payload);
+        yield axios.put(`/api/tasks/${tasks_id}/residents/${resident_id}`, action.payload);
         yield put({type: 'FETCH_TASKS'})
      }  catch (error) {
-        console.error(`Error updating task`);
+        console.error(`Error updating task`, error);
       }
   }
   
