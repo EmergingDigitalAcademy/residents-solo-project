@@ -254,6 +254,23 @@ router.get('/assistances', rejectUnauthenticated, (req, res) => {
     });
 });
 
+router.get('/view_history/:id', rejectUnauthenticated, (req, res) => {
+    console.log('/residents/view_history/:id GET route', req.params.id);
+
+    let queryText = `SELECT "transactions_log"."log_type", "transaction_residents"."date", "transaction_residents"."current" AS "Room_Number"
+    FROM transaction_residents
+    JOIN transactions_log
+    ON transaction_residents.transaction_id = transactions_log.id
+    WHERE transaction_residents.resident_id = $1
+    ORDER BY "transaction_residents"."date" ASC;
+    `;
+    pool.query(queryText, [req.params.id]).then((result) => {
+        res.send(result.rows);
+    }).catch((error) => {
+        res.sendStatus(500);
+    });
+});
+
 module.exports = router;
 
 // router.post("/housing/:id", rejectUnauthenticated, async (req, res) => {

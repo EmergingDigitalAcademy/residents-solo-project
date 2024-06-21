@@ -5,6 +5,7 @@ import residentsReducer from './residents.reducer';
 import tasksReducer from './tasks.reducer';
 import assistanceReducer from './assistance.reducer';
 import housingReducer from './housing.reducer';
+import transactionReducer from './transaction.reducer';
 // rootReducer is the primary reducer for our entire project
 // It bundles up all of the other reducers so our project can use them.
 // This is imported in index.js as rootSaga
@@ -18,6 +19,7 @@ const rootReducer = combineReducers({
   tasksReducer,
   assistanceReducer,
   housingReducer,
+  transactionReducer,
 });
 
 export default rootReducer;

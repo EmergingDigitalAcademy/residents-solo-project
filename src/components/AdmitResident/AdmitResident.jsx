@@ -27,7 +27,6 @@ function AdmitResident() {
       payload: newResident,
     });
     setNewResident(initialResident);
-    history.push("/residents/housing");
   };
 
   const handleTerm = (event) => {

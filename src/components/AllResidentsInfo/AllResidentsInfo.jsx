@@ -63,7 +63,7 @@ function AllResidentsInfo() {
               </td>
               <td>{resident.discharge_date}</td>
               <td>
-                <button>View History</button>
+                <button onClick={() => history.push(`/residents/view_history/${resident.id}`)}>View History</button>
               </td>
             </tr>
           ))}

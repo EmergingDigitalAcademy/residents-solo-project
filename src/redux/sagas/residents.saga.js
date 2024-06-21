@@ -39,6 +39,17 @@ function* fetchResidents(action) {
       console.error(`Error updating status`, error);
     }
   }
+
+  function* fetchTransaction(action){
+    console.log('action payload!!', action.payload);
+    const { resident_id } = action.payload
+    try{
+      const response = yield axios.get(`/api/residents/view_history/${resident_id}`);
+      yield put ({ type: 'SET_TRANSACTION', payload: response.data });
+    } catch (error) {
+      console.error(`Error getting transaction log`, error);
+    }
+  }
   
   function* addResidents(action) {
      try {
@@ -55,6 +66,7 @@ function* fetchResidents(action) {
     yield takeLatest('FETCH_HOUSING', fetchHousing);
     yield takeLatest('UPDATE_HOUSING', updateHousing);
     yield takeLatest('UPDATE_STATUS', updateStatus);
+    yield takeLatest('FETCH_TRANSACTIONS', fetchTransaction);
   }
   
   export default residentsSaga;
