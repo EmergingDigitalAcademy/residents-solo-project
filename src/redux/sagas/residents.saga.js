@@ -27,6 +27,18 @@ function* fetchResidents(action) {
       console.error(`Error updating housing`, error);
     }
   }
+
+  function* updateStatus(action){
+    const { resident_id } = action.payload;
+    console.log(resident_id);
+    try{
+      yield console.log(action);
+      yield axios.put(`/api/residents/archive/${resident_id}`, action.payload);
+      yield put({ type: 'FETCH_RESIDENTS' })
+    } catch (error) {
+      console.error(`Error updating status`, error);
+    }
+  }
   
   function* addResidents(action) {
      try {
@@ -42,6 +54,7 @@ function* fetchResidents(action) {
     yield takeLatest('ADD_RESIDENTS', addResidents);
     yield takeLatest('FETCH_HOUSING', fetchHousing);
     yield takeLatest('UPDATE_HOUSING', updateHousing);
+    yield takeLatest('UPDATE_STATUS', updateStatus);
   }
   
   export default residentsSaga;
