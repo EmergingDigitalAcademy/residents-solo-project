@@ -30,9 +30,8 @@ function ActiveResidents() {
          {residents.filter((r) => r.status !== 'Discharged').map((resident, i) => <div key={i}>
          <Card style={{ width: '18rem' }}>
             <Card.Body onClick={() => {history.push(`/tasks/${resident.id}`)}}>
-                    <Card.Img variant='top' src={resident.image} />
+                    <Card.Img variant='top' src='/images/default-profile-picture.jpg' />
                     <Card.Text>{resident.first_name} {resident.last_name}</Card.Text>
-                    <Card.Text></Card.Text>
                     <Card.Text>{resident.birthday}</Card.Text>
             </Card.Body>
             {user.role === 'admin' && <Button onClick={() => history.push(`/residents/housing/${resident.id}`)}>Assign Room</Button>}
