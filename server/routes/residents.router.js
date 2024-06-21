@@ -90,31 +90,98 @@ router.post("/admit", rejectUnauthenticated, async (req, res) => {
   }
 });
 
+router.get("/allergies/:id", rejectUnauthenticated, async (req, res) => {
+    console.log("/residents/residents_allergies POST route");
+    console.log("req params id log", req.params.id);
+    console.log("is authenticated?", req.isAuthenticated);
+    console.log("user", req.user);
+
+    let queryText = `
+    SELECT "allergies"."type" FROM "allergies"
+    JOIN "resident_allergies"
+    ON "resident_allergies"."allergies_id" = "allergies"."id"
+    WHERE "resident_allergies"."resident_id" = $1;
+    `;
+    pool.query(queryText, [req.params.resident_id]).then((result) => {
+        res.send(result.rows)
+    })
+    .catch((error) => {
+        console.log(error);
+        res.sendStatus(500);
+      });
+})
+
+router.get("/allergies", rejectUnauthenticated, async (req, res) => {
+    console.log("/residents/residents_allergies POST route");
+    console.log("req params id log", req.params.id);
+    console.log("is authenticated?", req.isAuthenticated);
+    console.log("user", req.user);
+
+    let queryText = `
+    SELECT * FROM "allergies";
+    `;
+    pool.query(queryText).then((result) => {
+        res.send(result.rows)
+    })
+    .catch((error) => {
+        console.log(error);
+        res.sendStatus(500);
+      });
+})
+
 //THIS WORKS
-router.post("/resident_allergies", rejectUnauthenticated, async (req, res) => {
+router.post("/allergies", rejectUnauthenticated, async (req, res) => {
   console.log("/residents/residents_allergies POST route");
-  console.log("req params id log", req.params.id);
   console.log("is authenticated?", req.isAuthenticated);
-  console.log("user", req.user);
-  console.log("req body allergies_id[0]", req.body.allergies_id);
+  const {resident_id, allergies} = req.body;
+  console.log("resident id: ", resident_id);
+  console.log('resident allergies: ', allergies);
+
 
   try {
-    const insertAllergies = await pool.query(
-      `
-            INSERT INTO "resident_allergies"
-            ("resident_id", "allergies_id")
-            VALUES
-            ($1, $2);`,
-      [req.body.resident_id, req.body.allergies_id]
-    );
+    let allergyQueryString = `
+    INSERT INTO "resident_allergies"
+    ("resident_id", "allergies_id")
+    VALUES
+    ($1, $2);`;
+    allergies.forEach( async (allergy) => {
+        await pool.query(allergyQueryString, [resident_id, allergy.id])
 
-    res.send(insertAllergies.rows[0]);
+    })
+
+    res.sendStatus(201);
     // const result = await pool.query(insertAllergiesQuery, insertAllergiesValues);
   } catch (err) {
     console.error(err);
     res.sendStatus(500);
   }
 });
+
+router.get("/allAllergies", rejectUnauthenticated, async (req, res) => {
+    try{
+        const queryText = `
+            SELECT * FROM "resident_allergies";
+        `;
+       const result = await pool.query(queryText);
+        res.send(result.rows);
+    }catch (error) {
+        console.error(error);
+        res.sendStatus(500);
+    }
+})
+
+router.delete("/allergies/:allergyId", rejectUnauthenticated, async (req, res) => {
+    console.log('delete allergy req body', req.params.allergyId);
+
+    try{
+        await pool.query(`DELETE FROM "resident_allergies"
+        WHERE id = $1;`, [Number(req.params.allergyId)])
+        res.sendStatus(200);
+    }catch (error) {
+        console.error(error);
+        res.sendStatus(500);
+    }
+})
 
 router.get("/housing", rejectUnauthenticated, async (req, res) => {
     console.log("/residents/housing GET route");

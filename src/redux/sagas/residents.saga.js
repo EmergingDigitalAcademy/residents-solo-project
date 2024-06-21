@@ -59,6 +59,44 @@ function* fetchResidents(action) {
         console.error(`Error adding new resident`, error);
       }
   }
+
+  function* fetchAllergies(action){
+    try{
+      const response = yield axios.get(`/api/residents/allergies`);
+      yield put ({ type: 'SET_ALLERGIES', payload: response.data });
+    }catch (error) {
+      console.error(`Error getting allergies`, error);
+    }
+  }
+
+  function* addAllergies(action){
+    console.log('action payload add allergies', action.payload)
+    try{
+      yield axios.post(`api/residents/allergies`, action.payload);
+      yield put ({ type: 'FETCH_ALLERGIES' })
+    }catch (error) {
+      console.error(`Error posting allergies`, error);
+    }
+  }
+
+  function* fetchResidentAllergies(action) {
+    try{
+      const response = yield axios.get(`api/residents/allAllergies`);
+      yield put ({ type: 'SET_RESIDENT_ALLERGIES', payload: response.data });
+    } catch(error){
+      console.error(`Error getting resident allergies`, error);
+    }
+  }
+
+  function* deleteAllergy(action){
+    console.log('delete allergy action payload', action.payload)
+    try{
+      yield axios.delete(`api/residents/allergies/${action.payload}`);
+      yield put ({ type: 'FETCH_ALLERGIES' })
+    } catch(error) {
+      console.error(`Error deleting allergy`, error);
+    }
+  }
   
   function* residentsSaga() {
     yield takeLatest('FETCH_RESIDENTS', fetchResidents);
@@ -67,6 +105,10 @@ function* fetchResidents(action) {
     yield takeLatest('UPDATE_HOUSING', updateHousing);
     yield takeLatest('UPDATE_STATUS', updateStatus);
     yield takeLatest('FETCH_TRANSACTIONS', fetchTransaction);
+    yield takeLatest('FETCH_ALLERGIES', fetchAllergies);
+    yield takeLatest('ADD_ALLERGIES', addAllergies);
+    yield takeLatest('DELETE_ALLERGY', deleteAllergy);
+    yield takeLatest('FETCH_RESIDENT_ALLERGIES', fetchResidentAllergies);
   }
   
   export default residentsSaga;

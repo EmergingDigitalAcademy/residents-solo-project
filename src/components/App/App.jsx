@@ -29,6 +29,7 @@ import TaskInfo from '../TaskInfo/TaskInfo';
 import Housing from '../Housing/Housing';
 import AllResidentsInfo from '../AllResidentsInfo/AllResidentsInfo';
 import ViewHistory from '../ViewHistory/ViewHistory';
+import AddAllergies from '../AddAllergies/AddAllergies';
 
 function App() {
   const dispatch = useDispatch();
@@ -101,6 +102,13 @@ function App() {
             path="/residents/housing/:resident_id"
           >
             <Housing />
+          </ProtectedRoute>
+
+          <ProtectedRoute
+            exact
+            path="/residents/allergies/:resident_id"
+          >
+            <AddAllergies />
           </ProtectedRoute>
 
           <ProtectedRoute

@@ -34,7 +34,10 @@ function ActiveResidents() {
                     <Card.Text>{resident.first_name} {resident.last_name}</Card.Text>
                     <Card.Text>{resident.birthday}</Card.Text>
             </Card.Body>
-            {user.role === 'admin' && <Button onClick={() => history.push(`/residents/housing/${resident.id}`)}>Assign Room</Button>}
+            {user.role === 'admin' && 
+            <Button onClick={() => history.push(`/residents/housing/${resident.id}`)}>Assign Room</Button>}
+            {user.role === 'admin' &&
+            <Button onClick={() => history.push(`/residents/allergies/${resident.id}`)}>Assign Allergies</Button>}
          </Card>
          </div>
         )
