@@ -36,7 +36,9 @@ const handleAssignRoom = (roomNumber) => {
    return (
       <div className="container">
          <h2>Housing</h2>
-
+            <div>
+                <Button onClick={() => history.push('/residents')}>Back to Active Residents</Button>
+            </div>
          {housing.filter((h) => !h.resident_id).map((house, i) => <div key={i}>
                     <div>
                         room number: {house.room_number}, hall: {house.hall}, floor: {house.floor}

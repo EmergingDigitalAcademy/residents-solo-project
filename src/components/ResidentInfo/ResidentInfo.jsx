@@ -4,6 +4,7 @@ import { useDispatch } from 'react-redux';
 import Card from 'react-bootstrap/Card';
 import { useHistory } from 'react-router-dom/cjs/react-router-dom.min';
 import { useParams } from 'react-router-dom/cjs/react-router-dom.min';
+import { Button } from 'react-bootstrap';
 
 function ResidentInfo() {
    const residents = useSelector((store) => store.residentsReducer);
@@ -46,6 +47,9 @@ function ResidentInfo() {
          </div>
         )
     }
+    </div>
+    <div>
+      <Button onClick={() => history.push('/residents')}>Back to Active Residents</Button>
     </div>
    </div>
 )}

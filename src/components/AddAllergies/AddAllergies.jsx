@@ -70,6 +70,9 @@ const submitAllergies = () => {
         )
     }
     <Button onClick={submitAllergies}>Submit</Button>
+    <div>
+      <Button onClick={() => history.push('/residents')}>Back to Active Residents</Button>
+    </div>
    </div>
 )}
 

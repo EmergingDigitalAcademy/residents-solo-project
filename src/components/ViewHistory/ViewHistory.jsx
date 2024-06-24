@@ -2,6 +2,7 @@ import { useSelector } from 'react-redux';
 import { useState, useEffect } from 'react';
 import { useDispatch } from 'react-redux';
 import Card from 'react-bootstrap/Card';
+import Button from 'react-bootstrap/Button';
 import { useHistory } from 'react-router-dom/cjs/react-router-dom.min';
 import { useParams } from 'react-router-dom/cjs/react-router-dom.min';
 
@@ -34,6 +35,9 @@ function ResidentInfo() {
                   </Card.Body>
                </Card>
       </div>
+      <div>
+      <Button onClick={() => history.push('/allResidents')}>Back to All Residents</Button>
+    </div>
          <table>
         <thead>
           <tr>
