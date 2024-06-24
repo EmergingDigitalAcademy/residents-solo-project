@@ -16,7 +16,7 @@ function ResidentInfo() {
 
    const history = useHistory();
 
-   const resident = residents.filter(res => res.id === id);
+   const resident = residents?.filter(res => res.id === id);
    console.log('resident', resident);
 
    useEffect(() => {
@@ -31,8 +31,8 @@ function ResidentInfo() {
                <Card style={{width: '18rem'}}>
                   <Card.Body>
                      <Card.Img variant='top' src='/images/default-profile-picture.jpg' />
-                     <Card.Text>{resident[0].first_name} {resident[0].last_name}</Card.Text>
-                     <Card.Text>{resident[0].birthday}</Card.Text>
+                     <Card.Text>{resident[0]?.first_name} {resident[0]?.last_name}</Card.Text>
+                     <Card.Text>{resident[0]?.birthday}</Card.Text>
                   </Card.Body>
                </Card>
       </div>

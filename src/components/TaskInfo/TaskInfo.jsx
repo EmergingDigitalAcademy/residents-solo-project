@@ -16,15 +16,20 @@ function TaskInfo() {
    const history = useHistory();
    const params = useParams();
    console.log('params', params);
-   const {id} = params;
-   console.log('Task Id ', id);
+   const {tasks_id, resident_id} = params;
+   console.log('Task Id, resident id ', tasks_id, resident_id);
    const assistanceReducer = useSelector((store) => store.assistanceReducer);
+   const tasksReducer = useSelector((store) => store.tasksReducer);
+
+   const tasks = tasksReducer?.filter(tasks => tasks.id === tasks_id);
+   console.log('resident', tasks);
 
    useEffect(() => {
       dispatch({
         type: 'FETCH_ASSISTANCE',
         payload: params
         })
+        dispatch({type: 'FETCH_TASKS'})
    }, []);
 
    const handleUpdateTask = (assistance_id, params) => {
@@ -40,6 +45,13 @@ function TaskInfo() {
    return (
       <div className="container">
          <h2>Assistance Info</h2>
+         <div className="container">
+               <Card style={{width: '18rem'}}>
+                  <Card.Body>
+                     <Card.Text>{tasks[0]?.name} {tasks[0]?.emblem}</Card.Text>
+                  </Card.Body>
+               </Card>
+      </div>
          {assistanceReducer.map((assistance, i) => <div key={assistance.id}>
          <Card style={{ width: '18rem' }}>
             <Card.Body>
