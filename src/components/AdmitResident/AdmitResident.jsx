@@ -7,6 +7,7 @@ import { useHistory } from "react-router-dom/cjs/react-router-dom.min";
 
 function AdmitResident() {
   //    const residents = useSelector((store) => store.residentsReducer);
+  const [term, setTerm] = useState('short');
   const initialResident = {
     image: "image.png",
     first_name: "",
@@ -29,14 +30,15 @@ function AdmitResident() {
     setNewResident(initialResident);
   };
 
-  const handleTerm = (event) => {
-    console.log("What term?", event.target.id);
+  const handleTerm = (selectedTerm) => {
     let updateResident = { ...newResident };
-    if (event.target.id === "short") {
-      updateResident.term = "short-term";
-    } else {
-      updateResident.term = "long-term";
-    }
+    updateResident.term = selectedTerm === "short" ? "short-term" : "long-term";
+    console.log("What term?", selectedTerm);
+    // if (event.target.id === "short") {
+    //   updateResident.term = "short-term";
+    // } else {
+    //   updateResident.term = "long-term";
+    // }
     setNewResident(updateResident);
   };
 
@@ -68,12 +70,34 @@ function AdmitResident() {
           value={newResident.image}
           placeholder="Image"
         />
-        <button type="button" id="short" onClick={handleTerm}>
-          Short Term
-        </button>
-        <button type="button" id="long" onClick={handleTerm}>
-          Long Term
-        </button>
+        <label>
+        <input
+          type="radio"
+          id="short"
+          name="term"
+          value="short"
+          checked={term === 'short'}
+          onChange={() => {
+            setTerm('short');
+            handleTerm('short');
+          }}
+        />
+        Short
+      </label>
+      <label>
+        <input
+          type="radio"
+          id="long"
+          name="term"
+          value="long"
+          checked={term === 'long'}
+          onChange={() => {
+            setTerm('long');
+            handleTerm('long');
+          }}
+        />
+        Long
+        </label>
         <button type="submit">Add Resident</button>
       </form>
     </div>
