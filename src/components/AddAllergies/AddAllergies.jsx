@@ -16,6 +16,7 @@ function AssignResident() {
    const { resident_id } = params
    console.log('allergies params', params);
    console.log('resident id params', resident_id);
+   console.log('ALL ALLERGIES', residentAllergies);
 
 const handleAddAllergies = (allergy) => {
     console.log(`${resident_id} has ${allergy.type} `)
@@ -62,9 +63,12 @@ const submitAllergies = () => {
 
          {allergiesReducer.map((allergy, i) => <div key={i}>
                     <div>
-                        type: {allergy.type}
-                        <Button onClick={() => handleAddAllergies(allergy)}>Add Allergy</Button>
-                        <Button onClick={() => handleRemoveAllergies(allergy)}>Remove Allergy</Button>
+                        type: {allergy.type}{ residentAllergies.some(
+                     (ra) => Number(ra.resident_id) === Number(resident_id) && Number(ra.allergies_id) === Number(allergy.id)
+                  )?(
+                    <Button onClick={() => handleRemoveAllergies(allergy)}>Remove Allergy</Button>): (
+                            <Button onClick={() => handleAddAllergies(allergy)}>Add Allergy</Button> )
+                        }
                     </div>
          </div>
         )
