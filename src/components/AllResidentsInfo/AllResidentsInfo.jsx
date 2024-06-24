@@ -56,10 +56,10 @@ function AllResidentsInfo() {
               <td>{resident.admitted_date}</td>
               <td>{resident.term}</td>
               <td>{resident.status}</td>
-              <td>
+              <td>{ resident.status === 'Active' ?
                 <button onClick={() => handleResidentDischarge(resident.id)}>
                   Discharge
-                </button>
+                </button> : ''}
               </td>
               <td>{resident.discharge_date}</td>
               <td>
