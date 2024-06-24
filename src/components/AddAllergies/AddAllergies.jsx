@@ -18,9 +18,12 @@ function AssignResident() {
    console.log('resident id params', resident_id);
    console.log('ALL ALLERGIES', residentAllergies);
 
-const handleAddAllergies = (allergy) => {
-    console.log(`${resident_id} has ${allergy.type} `)
-    setSelectAllergy([...selectAllergy, allergy])
+const handleAddAllergies = (selectAllergy) => {
+    console.log(`${resident_id} has ${selectAllergy} `)
+    dispatch({
+        type: 'ADD_ALLERGIES',
+        payload: {resident_id, allergies: [selectAllergy]}
+    })
 }
 
 const handleRemoveAllergies = (allergy) => {
@@ -42,14 +45,11 @@ dispatch ({
     
 }
 
-const submitAllergies = () => {
-    console.log('resident id in add allergies', resident_id);
-    console.log('selectAllergy', selectAllergy);
-    dispatch({
-        type: 'ADD_ALLERGIES',
-        payload: {resident_id, allergies: selectAllergy}
-    })
-}
+// const submitAllergies = () => {
+//     console.log('resident id in add allergies', resident_id);
+//     console.log('selectAllergy', selectAllergy);
+    
+// }
 
    useEffect(() => {
       dispatch({type: 'FETCH_ALLERGIES' })
@@ -59,7 +59,6 @@ const submitAllergies = () => {
    return (
       <div className="container">
          <h2>Allergies</h2>
-         <pre>{JSON.stringify(selectAllergy)}</pre>
 
          {allergiesReducer.map((allergy, i) => <div key={i}>
                     <div>
@@ -73,7 +72,7 @@ const submitAllergies = () => {
          </div>
         )
     }
-    <Button onClick={submitAllergies}>Submit</Button>
+    {/* <Button onClick={submitAllergies}>Submit</Button> */}
     <div>
       <Button onClick={() => history.push('/residents')}>Back to Active Residents</Button>
     </div>

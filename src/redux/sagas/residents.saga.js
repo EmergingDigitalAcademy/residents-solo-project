@@ -73,7 +73,7 @@ function* fetchResidents(action) {
     console.log('action payload add allergies', action.payload)
     try{
       yield axios.post(`api/residents/allergies`, action.payload);
-      yield put ({ type: 'FETCH_ALLERGIES' })
+      yield put ({ type: 'FETCH_RESIDENT_ALLERGIES' })
     }catch (error) {
       console.error(`Error posting allergies`, error);
     }
@@ -92,7 +92,7 @@ function* fetchResidents(action) {
     console.log('delete allergy action payload', action.payload)
     try{
       yield axios.delete(`api/residents/allergies/${action.payload}`);
-      yield put ({ type: 'FETCH_ALLERGIES' })
+      yield put ({ type: 'FETCH_RESIDENT_ALLERGIES' })
     } catch(error) {
       console.error(`Error deleting allergy`, error);
     }
