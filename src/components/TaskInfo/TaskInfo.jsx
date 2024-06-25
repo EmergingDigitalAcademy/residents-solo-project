@@ -52,6 +52,9 @@ function TaskInfo() {
                   </Card.Body>
                </Card>
       </div>
+      <div>
+         <Button onClick={() => history.push(`/tasks/${resident_id}`)}>Back to Resident Info</Button> 
+      </div>
          {assistanceReducer.map((assistance, i) => <div key={assistance.id}>
          <Card style={{ width: '18rem' }}>
             <Card.Body>
