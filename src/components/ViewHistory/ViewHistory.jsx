@@ -5,6 +5,7 @@ import Card from "react-bootstrap/Card";
 import Button from "react-bootstrap/Button";
 import { useHistory } from "react-router-dom/cjs/react-router-dom.min";
 import { useParams } from "react-router-dom/cjs/react-router-dom.min";
+import './ViewHistory.css';
 
 function ViewHistory() {
   const residents = useSelector((store) => store.residentsReducer);
