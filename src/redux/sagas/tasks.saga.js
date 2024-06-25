@@ -20,6 +20,16 @@ function* fetchTasks(action) {
        console.error(`Error getting assistance`, error);
      }
  }
+
+ function* fetchTasksResidents(action){
+  try{
+    yield console.log(action);
+    const response = yield axios.get(`/api/tasks/residents`);
+    yield put({ type: 'SET_TASKS_RESIDENTS', payload: response.data});
+  } catch(error){
+    console.error(`Error getting tasks residents`, error);
+  }
+ }
   
   function* updateTasks(action) {
     const { tasks_id, resident_id } = action.payload;
@@ -38,6 +48,7 @@ function* fetchTasks(action) {
     yield takeLatest('FETCH_TASKS', fetchTasks);
     yield takeLatest('UPDATE_TASKS', updateTasks);
     yield takeLatest('FETCH_ASSISTANCE', fetchAssistance);
+    yield takeLatest('FETCH_TASKS_RESIDENTS', fetchTasksResidents);
   }
   
   export default tasksSaga;

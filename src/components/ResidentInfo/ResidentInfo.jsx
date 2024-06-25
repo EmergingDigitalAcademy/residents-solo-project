@@ -5,15 +5,25 @@ import Card from 'react-bootstrap/Card';
 import { useHistory } from 'react-router-dom/cjs/react-router-dom.min';
 import { useParams } from 'react-router-dom/cjs/react-router-dom.min';
 import { Button } from 'react-bootstrap';
+import TaskDetail from './TaskDetail';
 
 function ResidentInfo() {
    const residents = useSelector((store) => store.residentsReducer);
    const tasks = useSelector((store) => store.tasksReducer);
+   const tasksResidents = useSelector((store) => store.tasksResidentsReducers);
+   const assistance = useSelector((store) => store.assistanceReducer);
    const dispatch = useDispatch();
    const params = useParams();
    const {id} = params;
+   const filteredTasksResidents = tasksResidents.filter((t) => Number(t.resident_id) === Number(id));
+   console.log('Filtered Resident Tasks', filteredTasksResidents);
+
+   console.log('tasks resident with assistance')
+   console.log('tasks residents', tasksResidents);
    console.log('resident info params', params);
    console.log('Resident Id ', id);
+   console.log('assistance', assistance[0]?.id);
+   console.log('residents', residents[0]?.id);
 
    const history = useHistory();
 
@@ -23,6 +33,8 @@ function ResidentInfo() {
    useEffect(() => {
       dispatch({type: 'FETCH_TASKS'})
       dispatch({type: 'FETCH_RESIDENTS'})
+      dispatch({type: 'FETCH_TASKS_RESIDENTS'})
+      dispatch({type: 'FETCH_ASSISTANCE'})
    }, []);
 
    return (
@@ -37,16 +49,12 @@ function ResidentInfo() {
                   </Card.Body>
                </Card>
       </div>
-      <div className="container">
-         {tasks.map((task, i) => <div key={i}>
-         <Card style={{ width: '18rem' }}>
-            <Card.Body onClick={() => {history.push(`/residents/${id}/tasks/${task.id}`)}}>
-                    <Card.Text>{task.emblem} {task.name}</Card.Text>
-            </Card.Body>
-         </Card>
-         </div>
-        )
-    }
+   
+    <div className='container'>
+      {tasks.map((task, i) => 
+      <TaskDetail key={i} task={task} residentId={id} filteredTasksResidents={filteredTasksResidents}/>
+      )}
+
     </div>
     <div>
       <Button onClick={() => history.push('/residents')}>Back to Active Residents</Button>

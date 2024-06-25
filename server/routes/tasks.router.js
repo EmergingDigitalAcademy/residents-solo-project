@@ -19,6 +19,18 @@ router.get('/', rejectUnauthenticated, (req, res) => {
     });
 });
 
+router.get('/residents', rejectUnauthenticated, (req, res) => {
+    console.log('tasks/residents GET route');
+
+    let queryText = `SELECT * FROM "tasks_residents";`;
+    pool.query(queryText).then((result) => {
+        res.send(result.rows);
+    }).catch((error) => {
+        console.log(error);
+        res.sendStatus(500);
+    });
+});
+
 //THIS WORKS
 router.put('/', rejectUnauthenticated, async (req, res) => {
     console.log('/tasks PUT route')
