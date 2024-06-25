@@ -5,6 +5,7 @@ import Button from "react-bootstrap/Button";
 import Card from "react-bootstrap/Card";
 import { useHistory } from "react-router-dom/cjs/react-router-dom.min";
 import './ActiveResidents.css';
+import moment from "moment";
 
 function ActiveResidents() {
   const user = useSelector((store) => store.user);
@@ -38,7 +39,7 @@ function ActiveResidents() {
                   {resident.first_name} {resident.last_name}
                 </Card.Text>
                 <Card.Text>ID: {resident.room_number}</Card.Text>
-                <Card.Text>{resident.birthday}</Card.Text>
+                <Card.Text>{moment(resident.birthday).format('MM/DD/YYYY')}</Card.Text>
               </Card.Body>
               {user.role === "admin" && (
                 <Button

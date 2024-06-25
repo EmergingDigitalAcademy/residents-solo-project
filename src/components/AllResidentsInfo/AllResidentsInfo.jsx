@@ -4,6 +4,7 @@ import { useDispatch } from "react-redux";
 import { useHistory } from "react-router-dom/cjs/react-router-dom.min";
 import Table from 'react-bootstrap/Table';
 import './AllResidentsInfo.css';
+import moment from "moment";
 
 function AllResidentsInfo() {
   const residents = useSelector((store) => store.residentsReducer);
@@ -45,8 +46,8 @@ function AllResidentsInfo() {
             <tr key={i}>
               <td>{resident.first_name}</td>
               <td>{resident.last_name}</td>
-              <td>{resident.birthday}</td>
-              <td>{resident.admitted_date}</td>
+              <td>{moment(resident.birthday).format('MM/DD/YYYY')}</td>
+              <td>{moment(resident.admitted_date).format('MM/DD/YYYY HH:mm:ss')}</td>
               <td>{resident.term}</td>
               <td>{resident.status}</td>
               <td id="discharge-btn">
@@ -58,8 +59,8 @@ function AllResidentsInfo() {
                   ""
                 )}
               </td>
-              <td>{resident.discharge_date}</td>
-              <td>
+              <td>{resident.discharge_date ? moment(resident.discharge_date).format('MM/DD/YYYY HH:mm:ss') : ''}</td>
+              <td id="view-history-btn">
                 <button
                   onClick={() =>
                     history.push(`/residents/view_history/${resident.id}`)

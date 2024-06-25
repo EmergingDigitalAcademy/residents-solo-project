@@ -7,6 +7,7 @@ import { useParams } from "react-router-dom/cjs/react-router-dom.min";
 import { Button } from "react-bootstrap";
 import TaskDetail from "./TaskDetail";
 import './ResidentInfo.css';
+import moment from "moment";
 
 function ResidentInfo() {
   const residents = useSelector((store) => store.residentsReducer);
@@ -53,7 +54,7 @@ function ResidentInfo() {
             <Card.Text>
                {resident[0]?.type}
             </Card.Text>
-            <Card.Text>{resident[0]?.birthday}</Card.Text>
+            <Card.Text>{moment(resident[0]?.birthday).format('MM/DD/YYYY')}</Card.Text>
           </Card.Body>
         </Card>
       </div>

@@ -7,6 +7,7 @@ import { useHistory } from "react-router-dom/cjs/react-router-dom.min";
 import { useParams } from "react-router-dom/cjs/react-router-dom.min";
 import './ViewHistory.css';
 import Table from 'react-bootstrap/Table';
+import moment from "moment";
 
 
 function ViewHistory() {
@@ -52,7 +53,7 @@ function ViewHistory() {
           {transactions.map((transaction, i) => (
             <tr key={i}>
               <td>{transaction.log_type}</td>
-              <td>{transaction.date}</td>
+              <td>{moment(transaction.date).format('MM/DD/YYYY HH:mm:ss')}</td>
               <td>{transaction.Room_Number}</td>
             </tr>
           ))}
