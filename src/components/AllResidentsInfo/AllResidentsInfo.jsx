@@ -2,6 +2,8 @@ import { useSelector } from "react-redux";
 import { useEffect } from "react";
 import { useDispatch } from "react-redux";
 import { useHistory } from "react-router-dom/cjs/react-router-dom.min";
+import Table from 'react-bootstrap/Table';
+import './AllResidentsInfo.css';
 
 function AllResidentsInfo() {
   const residents = useSelector((store) => store.residentsReducer);
@@ -24,7 +26,7 @@ function AllResidentsInfo() {
     <div className="container">
       <h2>All Residents Info</h2>
 
-      <table>
+      <Table striped bordered hover>
         <thead>
           <tr>
             <th>First Name</th>
@@ -47,7 +49,7 @@ function AllResidentsInfo() {
               <td>{resident.admitted_date}</td>
               <td>{resident.term}</td>
               <td>{resident.status}</td>
-              <td>
+              <td id="discharge-btn">
                 {resident.status === "Active" ? (
                   <button onClick={() => handleResidentDischarge(resident.id)}>
                     Discharge
@@ -69,7 +71,7 @@ function AllResidentsInfo() {
             </tr>
           ))}
         </tbody>
-      </table>
+      </Table>
     </div>
   );
 }

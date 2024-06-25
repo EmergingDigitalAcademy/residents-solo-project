@@ -6,6 +6,8 @@ import Button from "react-bootstrap/Button";
 import { useHistory } from "react-router-dom/cjs/react-router-dom.min";
 import { useParams } from "react-router-dom/cjs/react-router-dom.min";
 import './ViewHistory.css';
+import Table from 'react-bootstrap/Table';
+
 
 function ViewHistory() {
   const residents = useSelector((store) => store.residentsReducer);
@@ -29,20 +31,16 @@ function ViewHistory() {
     <div className="container">
       <h2>Resident History</h2>
       <div className="container">
-        <Card style={{ width: "18rem" }}>
-          <Card.Body>
-            <Card.Text>
+        <div id="history-resident-name">
               {resident[0]?.first_name} {resident[0]?.last_name}
-            </Card.Text>
-          </Card.Body>
-        </Card>
+        </div>
       </div>
       <div>
         <Button onClick={() => history.push("/allResidents")}>
           Back to All Residents
         </Button>
       </div>
-      <table>
+      <Table striped bordered hover>
         <thead>
           <tr>
             <th>Log Type</th>
@@ -59,7 +57,7 @@ function ViewHistory() {
             </tr>
           ))}
         </tbody>
-      </table>
+      </Table>
     </div>
   );
 }
