@@ -21,7 +21,7 @@ router.get("/", rejectUnauthenticated, (req, res) => {
     LEFT OUTER JOIN "allergies"
     ON "resident_allergies"."allergies_id" = "allergies"."id"
     GROUP BY "residents"."id", "image", "first_name", "last_name", "birthday", "term", "status", "discharge_date", "admitted_date", "hall", "floor", "housing"."room_number"
-    ORDER BY "admitted_date" DESC;
+    ORDER BY "room_number", "admitted_date" DESC;
     `;
   pool
     .query(queryText)

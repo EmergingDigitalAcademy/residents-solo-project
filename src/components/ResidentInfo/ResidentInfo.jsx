@@ -6,6 +6,7 @@ import { useHistory } from "react-router-dom/cjs/react-router-dom.min";
 import { useParams } from "react-router-dom/cjs/react-router-dom.min";
 import { Button } from "react-bootstrap";
 import TaskDetail from "./TaskDetail";
+import './ResidentInfo.css';
 
 function ResidentInfo() {
   const residents = useSelector((store) => store.residentsReducer);
@@ -43,11 +44,14 @@ function ResidentInfo() {
     <div>
       <h2>Resident Info</h2>
       <div className="container">
-        <Card style={{ width: "18rem" }}>
+        <Card style={{ width: "200px", height: "auto"}}>
           <Card.Body>
             <Card.Img variant="top" src="/images/default-profile-picture.jpg" />
             <Card.Text>
               {resident[0]?.first_name} {resident[0]?.last_name}
+            </Card.Text>
+            <Card.Text>
+               {resident[0]?.type}
             </Card.Text>
             <Card.Text>{resident[0]?.birthday}</Card.Text>
           </Card.Body>
@@ -57,6 +61,7 @@ function ResidentInfo() {
       <div className="container">
         {tasks.map((task, i) => (
           <TaskDetail
+          id="tasks-resident-info"
             key={i}
             task={task}
             residentId={id}
