@@ -13,7 +13,7 @@ function AdmitResident() {
     first_name: "",
     last_name: "",
     birthday: "",
-    term: "",
+    term: "short-term",
   };
   const [newResident, setNewResident] = useState(initialResident);
   const dispatch = useDispatch();
@@ -34,17 +34,8 @@ function AdmitResident() {
     let updateResident = { ...newResident };
     updateResident.term = selectedTerm === "short" ? "short-term" : "long-term";
     console.log("What term?", selectedTerm);
-    // if (event.target.id === "short") {
-    //   updateResident.term = "short-term";
-    // } else {
-    //   updateResident.term = "long-term";
-    // }
     setNewResident(updateResident);
   };
-
-  //    useEffect(() => {
-  //       dispatch({type: 'FETCH_RESIDENTS'})
-  //    }, []);
 
   return (
     <div className="container">

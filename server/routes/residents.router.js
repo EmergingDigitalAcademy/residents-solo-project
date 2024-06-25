@@ -330,7 +330,7 @@ router.get('/view_history/:id', rejectUnauthenticated, (req, res) => {
     JOIN transactions_log
     ON transaction_residents.transaction_id = transactions_log.id
     WHERE transaction_residents.resident_id = $1
-    ORDER BY "transaction_residents"."date" ASC;
+    ORDER BY "transaction_residents"."date" DESC;
     `;
     pool.query(queryText, [req.params.id]).then((result) => {
         res.send(result.rows);

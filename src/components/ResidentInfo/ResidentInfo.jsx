@@ -6,7 +6,7 @@ import { useHistory } from "react-router-dom/cjs/react-router-dom.min";
 import { useParams } from "react-router-dom/cjs/react-router-dom.min";
 import { Button } from "react-bootstrap";
 import TaskDetail from "./TaskDetail";
-import './ResidentInfo.css';
+import "./ResidentInfo.css";
 import moment from "moment";
 
 function ResidentInfo() {
@@ -43,37 +43,39 @@ function ResidentInfo() {
 
   return (
     <div>
-      <h2>Resident Info</h2>
+      <h2 style={{marginLeft: "70px"}}>Resident Info</h2>
       <div className="container">
-        <Card style={{ width: "200px", height: "auto"}}>
+        <Card style={{ width: "500px", height: "auto", border: "0"}}>
           <Card.Body>
-            <Card.Img variant="top" src="/images/default-profile-picture.jpg" />
+            <Card.Img style={{width: "200px", height: "200px"}} variant="top" src="/images/default-profile-picture.jpg" />
             <Card.Text>
               {resident[0]?.first_name} {resident[0]?.last_name}
             </Card.Text>
+            <Card.Text>ID: {resident[0]?.room_number}</Card.Text>
+            <Card.Text>{resident[0]?.allergies}</Card.Text>
             <Card.Text>
-               {resident[0]?.type}
+              {moment(resident[0]?.birthday).format("MM/DD/YYYY")}
             </Card.Text>
-            <Card.Text>{moment(resident[0]?.birthday).format('MM/DD/YYYY')}</Card.Text>
           </Card.Body>
         </Card>
+      </div>
+
+      <div>
+        <Button style={{marginLeft: "70px"}} onClick={() => history.push("/residents")}>
+          Back to Active Residents
+        </Button>
       </div>
 
       <div className="container">
         {tasks.map((task, i) => (
           <TaskDetail
-          id="tasks-resident-info"
+            id="tasks-resident-info"
             key={i}
             task={task}
             residentId={id}
             filteredTasksResidents={filteredTasksResidents}
           />
         ))}
-      </div>
-      <div>
-        <Button onClick={() => history.push("/residents")}>
-          Back to Active Residents
-        </Button>
       </div>
     </div>
   );
