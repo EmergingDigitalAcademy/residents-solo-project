@@ -1,43 +1,43 @@
-import React, { useEffect } from 'react';
+import React, { useEffect } from "react";
 import {
   HashRouter as Router,
   Redirect,
   Route,
   Switch,
-} from 'react-router-dom';
+} from "react-router-dom";
 
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch, useSelector } from "react-redux";
 
-import Nav from '../Nav/Nav';
-import Footer from '../Footer/Footer';
+import Nav from "../Nav/Nav";
+import Footer from "../Footer/Footer";
 
-import ProtectedRoute from '../ProtectedRoute/ProtectedRoute';
+import ProtectedRoute from "../ProtectedRoute/ProtectedRoute";
 
-import AboutPage from '../AboutPage/AboutPage';
-import UserPage from '../UserPage/UserPage';
-import InfoPage from '../InfoPage/InfoPage';
-import LandingPage from '../LandingPage/LandingPage';
-import LoginPage from '../LoginPage/LoginPage';
-import RegisterPage from '../RegisterPage/RegisterPage';
+import AboutPage from "../AboutPage/AboutPage";
+import UserPage from "../UserPage/UserPage";
+import InfoPage from "../InfoPage/InfoPage";
+import LandingPage from "../LandingPage/LandingPage";
+import LoginPage from "../LoginPage/LoginPage";
+import RegisterPage from "../RegisterPage/RegisterPage";
 
-import './App.css';
-import ActiveResidents from '../ActiveResidents/ActiveResidents';
-import ResidentInfo from '../ResidentInfo/ResidentInfo';
-import AdmitResident from '../AdmitResident/AdmitResident';
-import 'bootstrap/dist/css/bootstrap.min.css';
-import TaskInfo from '../TaskInfo/TaskInfo';
-import Housing from '../Housing/Housing';
-import AllResidentsInfo from '../AllResidentsInfo/AllResidentsInfo';
-import ViewHistory from '../ViewHistory/ViewHistory';
-import AddAllergies from '../AddAllergies/AddAllergies';
+import "./App.css";
+import ActiveResidents from "../ActiveResidents/ActiveResidents";
+import ResidentInfo from "../ResidentInfo/ResidentInfo";
+import AdmitResident from "../AdmitResident/AdmitResident";
+import "bootstrap/dist/css/bootstrap.min.css";
+import TaskInfo from "../TaskInfo/TaskInfo";
+import Housing from "../Housing/Housing";
+import AllResidentsInfo from "../AllResidentsInfo/AllResidentsInfo";
+import ViewHistory from "../ViewHistory/ViewHistory";
+import AddAllergies from "../AddAllergies/AddAllergies";
 
 function App() {
   const dispatch = useDispatch();
 
-  const user = useSelector(store => store.user);
+  const user = useSelector((store) => store.user);
 
   useEffect(() => {
-    dispatch({ type: 'FETCH_USER' });
+    dispatch({ type: "FETCH_USER" });
   }, [dispatch]);
 
   return (
@@ -69,59 +69,35 @@ function App() {
             <UserPage />
           </ProtectedRoute>
 
-          <ProtectedRoute
-            exact
-            path="/residents"
-          >
+          <ProtectedRoute exact path="/residents">
             <ActiveResidents />
           </ProtectedRoute>
 
-          <ProtectedRoute
-            exact
-            path="/allResidents"
-          >
+          <ProtectedRoute exact path="/allResidents">
             <AllResidentsInfo />
           </ProtectedRoute>
 
-          <ProtectedRoute
-            exact
-            path="/residents/admit"
-          >
+          <ProtectedRoute exact path="/residents/admit">
             <AdmitResident />
           </ProtectedRoute>
 
-          <ProtectedRoute
-            exact
-            path="/residents/view_history/:id"
-          >
+          <ProtectedRoute exact path="/residents/view_history/:id">
             <ViewHistory />
           </ProtectedRoute>
 
-          <ProtectedRoute
-            exact
-            path="/residents/housing/:resident_id"
-          >
+          <ProtectedRoute exact path="/residents/housing/:resident_id">
             <Housing />
           </ProtectedRoute>
 
-          <ProtectedRoute
-            exact
-            path="/residents/allergies/:resident_id"
-          >
+          <ProtectedRoute exact path="/residents/allergies/:resident_id">
             <AddAllergies />
           </ProtectedRoute>
 
-          <ProtectedRoute
-            exact
-            path="/tasks/:id"
-          >
+          <ProtectedRoute exact path="/tasks/:id">
             <ResidentInfo />
           </ProtectedRoute>
 
-          <ProtectedRoute
-            exact
-            path="/residents/:resident_id/tasks/:tasks_id"
-          >
+          <ProtectedRoute exact path="/residents/:resident_id/tasks/:tasks_id">
             <TaskInfo />
           </ProtectedRoute>
 
@@ -133,46 +109,37 @@ function App() {
             <InfoPage />
           </ProtectedRoute>
 
-          <Route
-            exact
-            path="/login"
-          >
-            {user.id ?
-              // If the user is already logged in, 
+          <Route exact path="/login">
+            {user.id ? (
+              // If the user is already logged in,
               // redirect to the /user page
               <Redirect to="/user" />
-              :
+            ) : (
               // Otherwise, show the login page
               <LoginPage />
-            }
+            )}
           </Route>
 
-          <Route
-            exact
-            path="/registration"
-          >
-            {user.id ?
-              // If the user is already logged in, 
+          <Route exact path="/registration">
+            {user.id ? (
+              // If the user is already logged in,
               // redirect them to the /user page
               <Redirect to="/user" />
-              :
+            ) : (
               // Otherwise, show the registration page
               <RegisterPage />
-            }
+            )}
           </Route>
 
-          <Route
-            exact
-            path="/home"
-          >
-            {user.id ?
-              // If the user is already logged in, 
+          <Route exact path="/home">
+            {user.id ? (
+              // If the user is already logged in,
               // redirect them to the /user page
               <Redirect to="/user" />
-              :
+            ) : (
               // Otherwise, show the Landing page
               <LandingPage />
-            }
+            )}
           </Route>
 
           {/* If none of the other routes matched, we will show a 404. */}

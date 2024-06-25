@@ -1,44 +1,47 @@
-import { useSelector } from 'react-redux';
-import { useState, useEffect } from 'react';
-import { useDispatch } from 'react-redux';
-import Card from 'react-bootstrap/Card';
-import Button from 'react-bootstrap/Button';
-import { useHistory } from 'react-router-dom/cjs/react-router-dom.min';
-import { useParams } from 'react-router-dom/cjs/react-router-dom.min';
+import { useSelector } from "react-redux";
+import { useEffect } from "react";
+import { useDispatch } from "react-redux";
+import Card from "react-bootstrap/Card";
+import Button from "react-bootstrap/Button";
+import { useHistory } from "react-router-dom/cjs/react-router-dom.min";
+import { useParams } from "react-router-dom/cjs/react-router-dom.min";
 
-function ResidentInfo() {
-   const residents = useSelector((store) => store.residentsReducer);
-   const tasks = useSelector((store) => store.tasksReducer);
-   const transactions = useSelector((store) => store.transactionReducer)
-   const dispatch = useDispatch();
-   const params = useParams();
-   const { id } = params;
-   console.log('Resident Id ', params);
+function ViewHistory() {
+  const residents = useSelector((store) => store.residentsReducer);
+  const transactions = useSelector((store) => store.transactionReducer);
+  const dispatch = useDispatch();
+  const params = useParams();
+  const { id } = params;
+  console.log("Resident Id ", params);
 
-   const resident = residents?.filter(res => res.id === id);
-   console.log('resident', resident);
+  const resident = residents?.filter((res) => res.id === id);
+  console.log("resident", resident);
 
-   const history = useHistory();
+  const history = useHistory();
 
-   useEffect(() => {
-      dispatch({type: 'FETCH_TRANSACTIONS', payload: {resident_id: id}})
-      dispatch({type: 'FETCH_RESIDENTS'})
-   }, []);
+  useEffect(() => {
+    dispatch({ type: "FETCH_TRANSACTIONS", payload: { resident_id: id } });
+    dispatch({ type: "FETCH_RESIDENTS" });
+  }, []);
 
-   return (
+  return (
+    <div className="container">
+      <h2>Resident History</h2>
       <div className="container">
-         <h2>Resident History</h2>
-         <div className="container">
-               <Card style={{width: '18rem'}}>
-                  <Card.Body>
-                     <Card.Text>{resident[0]?.first_name} {resident[0]?.last_name}</Card.Text>
-                  </Card.Body>
-               </Card>
+        <Card style={{ width: "18rem" }}>
+          <Card.Body>
+            <Card.Text>
+              {resident[0]?.first_name} {resident[0]?.last_name}
+            </Card.Text>
+          </Card.Body>
+        </Card>
       </div>
       <div>
-      <Button onClick={() => history.push('/allResidents')}>Back to All Residents</Button>
-    </div>
-         <table>
+        <Button onClick={() => history.push("/allResidents")}>
+          Back to All Residents
+        </Button>
+      </div>
+      <table>
         <thead>
           <tr>
             <th>Log Type</th>
@@ -47,17 +50,17 @@ function ResidentInfo() {
           </tr>
         </thead>
         <tbody>
-         {transactions.map((transaction, i) =>
-         <tr key={i}>
+          {transactions.map((transaction, i) => (
+            <tr key={i}>
               <td>{transaction.log_type}</td>
               <td>{transaction.date}</td>
               <td>{transaction.Room_Number}</td>
             </tr>
-        )
-    }
+          ))}
         </tbody>
       </table>
-   </div>
-)}
+    </div>
+  );
+}
 
-export default ResidentInfo;
+export default ViewHistory;

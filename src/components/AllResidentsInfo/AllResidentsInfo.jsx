@@ -1,20 +1,12 @@
 import { useSelector } from "react-redux";
-import { useState, useEffect } from "react";
+import { useEffect } from "react";
 import { useDispatch } from "react-redux";
-import Button from "react-bootstrap/Button";
-import Card from "react-bootstrap/Card";
 import { useHistory } from "react-router-dom/cjs/react-router-dom.min";
-import { useParams } from "react-router-dom/cjs/react-router-dom.min";
 
 function AllResidentsInfo() {
-  const user = useSelector((store) => store.user);
   const residents = useSelector((store) => store.residentsReducer);
-  //    const [newResident, setNewResident] = useState('');
   const dispatch = useDispatch();
   const history = useHistory();
-  const params = useParams();
-  const { resident_id } = params;
-  //    const {}
 
   const handleResidentDischarge = (residentId) => {
     console.log(residentId);
@@ -22,7 +14,6 @@ function AllResidentsInfo() {
       type: "UPDATE_STATUS",
       payload: { resident_id: residentId },
     });
-    // console.log(params);
   };
 
   useEffect(() => {
@@ -56,14 +47,24 @@ function AllResidentsInfo() {
               <td>{resident.admitted_date}</td>
               <td>{resident.term}</td>
               <td>{resident.status}</td>
-              <td>{ resident.status === 'Active' ?
-                <button onClick={() => handleResidentDischarge(resident.id)}>
-                  Discharge
-                </button> : ''}
+              <td>
+                {resident.status === "Active" ? (
+                  <button onClick={() => handleResidentDischarge(resident.id)}>
+                    Discharge
+                  </button>
+                ) : (
+                  ""
+                )}
               </td>
               <td>{resident.discharge_date}</td>
               <td>
-                <button onClick={() => history.push(`/residents/view_history/${resident.id}`)}>View History</button>
+                <button
+                  onClick={() =>
+                    history.push(`/residents/view_history/${resident.id}`)
+                  }
+                >
+                  View History
+                </button>
               </td>
             </tr>
           ))}

@@ -9,7 +9,7 @@ function AdmitResident() {
   //    const residents = useSelector((store) => store.residentsReducer);
   const [term, setTerm] = useState('short');
   const initialResident = {
-    image: "image.png",
+    image: "default-profile-picture.jpg",
     first_name: "",
     last_name: "",
     birthday: "",
