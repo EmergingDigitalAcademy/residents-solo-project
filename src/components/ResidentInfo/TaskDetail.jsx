@@ -1,11 +1,12 @@
 import Card from "react-bootstrap/Card";
 import { useHistory } from "react-router-dom/cjs/react-router-dom.min";
+import './ResidentInfo.css'
 
 function TaskDetail({ task, residentId, filteredTasksResidents }) {
   const history = useHistory();
 
   return (
-    <div className="container">
+    <div className="container, taskDetailCard">
       <Card
         style={{
           width: "18rem",

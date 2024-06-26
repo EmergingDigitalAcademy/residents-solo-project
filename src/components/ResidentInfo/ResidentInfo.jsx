@@ -70,8 +70,12 @@ function ResidentInfo() {
                   <Card.Text className="residentInfoName">
                     {resident[0]?.first_name} {resident[0]?.last_name}
                   </Card.Text>
-                  <Card.Text className="residentInfoID"><strong>ID:</strong> {resident[0]?.room_number}</Card.Text>
-                  <Card.Text className="residentInfoAllergy"><strong>Allergies:</strong> {resident[0]?.allergies}</Card.Text>
+                  <Card.Text className="residentInfoID">
+                    <strong>ID:</strong> {resident[0]?.room_number}
+                  </Card.Text>
+                  <Card.Text className="residentInfoAllergy">
+                    <strong>Allergies:</strong> {resident[0]?.allergies}
+                  </Card.Text>
                   <Card.Text className="residentInfoBirthday">
                     <strong>Birthday:</strong>{" "}
                     {moment(resident[0]?.birthday).format("MM/DD/YYYY")}
@@ -81,23 +85,26 @@ function ResidentInfo() {
             </Card>
           </div>
         </Col>
+
         <div>
           <button onClick={() => history.push("/residents")}>
             Back to Active Residents
           </button>
         </div>
 
-        <div className="container">
-          {tasks.map((task, i) => (
-            <TaskDetail
-              id="tasks-resident-info"
-              key={i}
-              task={task}
-              residentId={id}
-              filteredTasksResidents={filteredTasksResidents}
-            />
-          ))}
-        </div>
+        <Col>
+          <div className="container">
+            {tasks.map((task, i) => (
+              <TaskDetail
+                id="tasks-resident-info"
+                key={i}
+                task={task}
+                residentId={id}
+                filteredTasksResidents={filteredTasksResidents}
+              />
+            ))}
+          </div>
+        </Col>
       </Row>
     </div>
   );
