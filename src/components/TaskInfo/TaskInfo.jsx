@@ -75,7 +75,7 @@ function TaskInfo() {
         {assistanceReducer.map((assistance, i) => (
           <div className="container, taskInfoCard" key={assistance.id}>
             <Card style={{ width: "18rem" }}>
-              <Card.Body>
+              <Card.Body className="taskInfocardbody">
                 <Card.Text
                   onClick={() => handleUpdateTask(assistance.id, params)}
                 >

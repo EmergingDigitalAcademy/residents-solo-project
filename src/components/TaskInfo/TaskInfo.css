@@ -10,3 +10,7 @@
 .taskInfoName {
     font-size: 25px;
 }
+
+.taskInfocardbody:hover {
+    cursor: pointer;
+}

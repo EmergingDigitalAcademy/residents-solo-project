@@ -26,5 +26,6 @@
 
 .taskdetailcardbody:hover{
     background-color: teal;
+    border-color: teal;
 }
 
