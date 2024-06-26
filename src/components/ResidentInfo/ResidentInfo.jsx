@@ -52,9 +52,9 @@ function ResidentInfo() {
               {resident[0]?.first_name} {resident[0]?.last_name}
             </Card.Text>
             <Card.Text>ID: {resident[0]?.room_number}</Card.Text>
-            <Card.Text>{resident[0]?.allergies}</Card.Text>
+            <Card.Text>Allergies: {resident[0]?.allergies}</Card.Text>
             <Card.Text>
-              {moment(resident[0]?.birthday).format("MM/DD/YYYY")}
+              Birthday: {moment(resident[0]?.birthday).format("MM/DD/YYYY")}
             </Card.Text>
           </Card.Body>
         </Card>
