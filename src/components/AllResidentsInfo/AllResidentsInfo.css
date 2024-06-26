@@ -7,3 +7,7 @@
     align-content: center;
     text-align: center;
 }
+
+.AllResidentsbtns:hover{
+    background-color: teal;
+}

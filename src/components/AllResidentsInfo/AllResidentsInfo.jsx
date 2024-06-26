@@ -2,8 +2,8 @@ import { useSelector } from "react-redux";
 import { useEffect } from "react";
 import { useDispatch } from "react-redux";
 import { useHistory } from "react-router-dom/cjs/react-router-dom.min";
-import Table from 'react-bootstrap/Table';
-import './AllResidentsInfo.css';
+import Table from "react-bootstrap/Table";
+import "./AllResidentsInfo.css";
 import moment from "moment";
 
 function AllResidentsInfo() {
@@ -46,22 +46,34 @@ function AllResidentsInfo() {
             <tr key={i}>
               <td>{resident.first_name}</td>
               <td>{resident.last_name}</td>
-              <td>{moment(resident.birthday).format('MM/DD/YYYY')}</td>
-              <td>{moment(resident.admitted_date).format('MM/DD/YYYY HH:mm:ss')}</td>
+              <td>{moment(resident.birthday).format("MM/DD/YYYY")}</td>
+              <td>
+                {moment(resident.admitted_date).format("MM/DD/YYYY HH:mm:ss")}
+              </td>
               <td>{resident.term}</td>
               <td>{resident.status}</td>
               <td id="discharge-btn">
                 {resident.status === "Active" ? (
-                  <button onClick={() => handleResidentDischarge(resident.id)}>
+                  <button
+                    className="AllResidentsbtns"
+                    onClick={() => handleResidentDischarge(resident.id)}
+                  >
                     Discharge
                   </button>
                 ) : (
                   ""
                 )}
               </td>
-              <td>{resident.discharge_date ? moment(resident.discharge_date).format('MM/DD/YYYY HH:mm:ss') : ''}</td>
+              <td>
+                {resident.discharge_date
+                  ? moment(resident.discharge_date).format(
+                      "MM/DD/YYYY HH:mm:ss"
+                    )
+                  : ""}
+              </td>
               <td id="view-history-btn">
                 <button
+                  className="AllResidentsbtns"
                   onClick={() =>
                     history.push(`/residents/view_history/${resident.id}`)
                   }

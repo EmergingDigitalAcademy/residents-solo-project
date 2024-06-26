@@ -5,10 +5,9 @@ import Card from "react-bootstrap/Card";
 import Button from "react-bootstrap/Button";
 import { useHistory } from "react-router-dom/cjs/react-router-dom.min";
 import { useParams } from "react-router-dom/cjs/react-router-dom.min";
-import './ViewHistory.css';
-import Table from 'react-bootstrap/Table';
+import "./ViewHistory.css";
+import Table from "react-bootstrap/Table";
 import moment from "moment";
-
 
 function ViewHistory() {
   const residents = useSelector((store) => store.residentsReducer);
@@ -33,7 +32,7 @@ function ViewHistory() {
       <h2>Resident History</h2>
       <div className="container">
         <div id="history-resident-name">
-              {resident[0]?.first_name} {resident[0]?.last_name}
+          {resident[0]?.first_name} {resident[0]?.last_name}
         </div>
       </div>
       <div>
@@ -53,7 +52,7 @@ function ViewHistory() {
           {transactions.map((transaction, i) => (
             <tr key={i}>
               <td>{transaction.log_type}</td>
-              <td>{moment(transaction.date).format('MM/DD/YYYY HH:mm:ss')}</td>
+              <td>{moment(transaction.date).format("MM/DD/YYYY HH:mm:ss")}</td>
               <td>{transaction.Room_Number}</td>
             </tr>
           ))}
