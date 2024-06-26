@@ -78,7 +78,7 @@ function AddRemoveAllergies() {
               <ListGroup >
                 {allergiesReducer.map((allergy, i) => (
                   <div key={i}>
-                    <ListGroup.Item >
+                    <ListGroup.Item className="listgrouptype">
                       <strong>{allergy.type}</strong>
                     </ListGroup.Item>
                     <ListGroup.Item >

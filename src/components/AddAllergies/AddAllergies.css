@@ -19,3 +19,7 @@
 .backbtnAllergy:hover{
     background-color: teal;
 }
+
+.listgrouptype{
+    border-bottom: none;
+}
