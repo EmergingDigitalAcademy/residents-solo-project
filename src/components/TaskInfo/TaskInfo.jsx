@@ -1,10 +1,21 @@
 import { useSelector } from "react-redux";
 import { useEffect } from "react";
 import { useDispatch } from "react-redux";
-import Button from "react-bootstrap/Button";
-import Card from "react-bootstrap/Card";
 import { useHistory } from "react-router-dom/cjs/react-router-dom.min";
 import { useParams } from "react-router-dom/cjs/react-router-dom.min";
+import './TaskInfo.css';
+import {
+  Container,
+  Navbar,
+  Nav,
+  Button,
+  Dropdown,
+  Card,
+  Row,
+  Col,
+  Alert,
+  ListGroup,
+} from "react-bootstrap";
 
 function TaskInfo() {
   const tasksResidents = useSelector((store) => store.tasksResidents);
@@ -41,33 +52,41 @@ function TaskInfo() {
   return (
     <div className="container">
       <h2>Assistance Info</h2>
-      <div className="container">
-        <Card style={{ width: "18rem" }}>
-          <Card.Body>
-            <Card.Text>
-              {tasks[0]?.name} {tasks[0]?.emblem}
-            </Card.Text>
-          </Card.Body>
-        </Card>
-      </div>
-      <div>
-        <Button onClick={() => history.push(`/tasks/${resident_id}`)}>
-          Back to Resident Info
-        </Button>
-      </div>
-      {assistanceReducer.map((assistance, i) => (
-        <div key={assistance.id}>
-          <Card style={{ width: "18rem" }}>
-            <Card.Body>
-              <Card.Text
-                onClick={() => handleUpdateTask(assistance.id, params)}
-              >
-                {assistance.type}
-              </Card.Text>
-            </Card.Body>
-          </Card>
-        </div>
-      ))}
+      <Row>
+        <Col xs="12">
+          <div className="container">
+            <Card className="taskInfoName" style={{ width: "18rem", border: "0"}}>
+              <Card.Body>
+                <Card.Text>
+                  {tasks[0]?.name} 
+                </Card.Text>
+              </Card.Body>
+            </Card>
+          </div>
+        </Col>
+        <Col xs="12">
+          <div className="container">
+            <button className="backbtnTaskInfo" onClick={() => history.push(`/tasks/${resident_id}`)}>
+              Back to Resident Info
+            </button>
+          </div>
+        </Col>
+        <Col xs="12">
+        {assistanceReducer.map((assistance, i) => (
+          <div className="container, taskInfoCard" key={assistance.id}>
+            <Card style={{ width: "18rem" }}>
+              <Card.Body>
+                <Card.Text
+                  onClick={() => handleUpdateTask(assistance.id, params)}
+                >
+                  {assistance.type}
+                </Card.Text>
+              </Card.Body>
+            </Card>
+          </div>
+        ))}
+        </Col>
+      </Row>
     </div>
   );
 }

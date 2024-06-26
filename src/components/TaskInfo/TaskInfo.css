@@ -1,0 +1,12 @@
+.taskInfoCard{
+    display: inline-block;
+    padding: 20px;
+}
+
+.backbtnTaskInfo:hover {
+    background-color: teal;
+}
+
+.taskInfoName {
+    font-size: 25px;
+}

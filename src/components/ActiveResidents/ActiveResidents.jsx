@@ -38,50 +38,61 @@ function ActiveResidents() {
             .filter((r) => r.status !== "Discharged")
             .map((resident, i) => (
               <div className="active-residents" key={i}>
-                <Card className="cardActiveResident" style={{ width: "200px", height: "auto" }}>
-                    <div >
-                  <Card.Body style={{backgroundColor: "gray"}}
-                    onClick={() => {
-                      history.push(`/tasks/${resident.id}`);
-                    }}
-                  >
-                    <Card.Img
-                      id="active-resident-img"
-                      variant="top"
-                      src="/images/default-profile-picture.jpg"
-                    />
+                <Card
+                  className="cardActiveResident"
+                  style={{ width: "200px", height: "auto" }}
+                >
+                  <div>
+                    <Card.Body
+                      style={{ backgroundColor: "gray" }}
+                      onClick={() => {
+                        history.push(`/tasks/${resident.id}`);
+                      }}
+                    >
+                      <Card.Img
+                        id="active-resident-img"
+                        variant="top"
+                        src="/images/default-profile-picture.jpg"
+                      />
                     </Card.Body>
-                    <Card.Body onClick={() => {
-                      history.push(`/tasks/${resident.id}`);
-                    }}>
-                    <Card.Text>
-                      {resident.first_name} {resident.last_name}
-                    </Card.Text>
-                    <Card.Text>ID: {resident.room_number}</Card.Text>
-                    <Card.Text>
-                      Birthday: {moment(resident.birthday).format("MM/DD/YYYY")}
-                    </Card.Text>
-                  </Card.Body>
+                    <Card.Body
+                      onClick={() => {
+                        history.push(`/tasks/${resident.id}`);
+                      }}
+                    >
+                      <Card.Text>
+                        {resident.first_name} {resident.last_name}
+                      </Card.Text>
+                      <Card.Text>ID: {resident.room_number}</Card.Text>
+                      <Card.Text>
+                        Birthday:{" "}
+                        {moment(resident.birthday).format("MM/DD/YYYY")}
+                      </Card.Text>
+                    </Card.Body>
                   </div>
                   <div className="d-flex flex-row">
-                  {user.role === "admin" && (
-                    <button variant="custom" className="activeResidentbtn"
-                      onClick={() =>
-                        history.push(`/residents/housing/${resident.id}`)
-                      }
-                    >
-                      Assign Room
-                    </button>
-                  )}
-                  {user.role === "admin" && (
-                    <button variant="custom" className="activeResidentbtn"
-                      onClick={() =>
-                        history.push(`/residents/allergies/${resident.id}`)
-                      }
-                    >
-                      Assign Allergies
-                    </button>
-                  )}
+                    {user.role === "admin" && (
+                      <button
+                        variant="custom"
+                        className="activeResidentbtn"
+                        onClick={() =>
+                          history.push(`/residents/housing/${resident.id}`)
+                        }
+                      >
+                        Assign Room
+                      </button>
+                    )}
+                    {user.role === "admin" && (
+                      <button
+                        variant="custom"
+                        className="activeResidentbtn"
+                        onClick={() =>
+                          history.push(`/residents/allergies/${resident.id}`)
+                        }
+                      >
+                        Assign Allergies
+                      </button>
+                    )}
                   </div>
                 </Card>
               </div>

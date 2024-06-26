@@ -57,7 +57,7 @@ function ResidentInfo() {
     <div className="container">
       <h2>Resident Info</h2>
       <Row className="mb-4">
-        <Col>
+        <Col xs="12">
           <div className="container">
             <Card style={{ width: "auto", height: "auto", border: "0" }}>
               <Card.Body className="d-flex flex-row">
@@ -85,18 +85,17 @@ function ResidentInfo() {
             </Card>
           </div>
         </Col>
-
-        <div>
-          <button onClick={() => history.push("/residents")}>
-            Back to Active Residents
-          </button>
-        </div>
-
+        <Col xs="12">
+          <div className="container">
+            <button className="backbtnResidentInfo" onClick={() => history.push("/residents")}>
+              Back to Active Residents
+            </button>
+          </div>
+        </Col>
         <Col>
           <div className="container">
             {tasks.map((task, i) => (
               <TaskDetail
-                id="tasks-resident-info"
                 key={i}
                 task={task}
                 residentId={id}
