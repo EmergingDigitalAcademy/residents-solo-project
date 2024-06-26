@@ -38,9 +38,9 @@ function ActiveResidents() {
             .filter((r) => r.status !== "Discharged")
             .map((resident, i) => (
               <div className="active-residents" key={i}>
-                <Card style={{ width: "200px", height: "auto" }}>
+                <Card className="cardActiveResident" style={{ width: "200px", height: "auto" }}>
                     <div >
-                  <Card.Body
+                  <Card.Body style={{backgroundColor: "gray"}}
                     onClick={() => {
                       history.push(`/tasks/${resident.id}`);
                     }}
@@ -50,12 +50,14 @@ function ActiveResidents() {
                       variant="top"
                       src="/images/default-profile-picture.jpg"
                     />
+                    </Card.Body>
+                    <Card.Body>
                     <Card.Text>
                       {resident.first_name} {resident.last_name}
                     </Card.Text>
                     <Card.Text>ID: {resident.room_number}</Card.Text>
                     <Card.Text>
-                      {moment(resident.birthday).format("MM/DD/YYYY")}
+                      Birthday: {moment(resident.birthday).format("MM/DD/YYYY")}
                     </Card.Text>
                   </Card.Body>
                   </div>

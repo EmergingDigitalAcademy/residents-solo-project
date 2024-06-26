@@ -14,5 +14,10 @@
 }
 
 .cardActiveResident:hover {
-    border-color: teal;
+    border-color: black;
+    cursor: pointer;
+}
+
+.cardActiveResident {
+    background-color: teal;
 }
