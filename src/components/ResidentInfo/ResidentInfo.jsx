@@ -1,13 +1,25 @@
 import { useSelector } from "react-redux";
 import { useEffect } from "react";
 import { useDispatch } from "react-redux";
-import Card from "react-bootstrap/Card";
 import { useHistory } from "react-router-dom/cjs/react-router-dom.min";
 import { useParams } from "react-router-dom/cjs/react-router-dom.min";
-import { Button } from "react-bootstrap";
 import TaskDetail from "./TaskDetail";
 import "./ResidentInfo.css";
 import moment from "moment";
+import {
+  Container,
+  Navbar,
+  Nav,
+  Button,
+  Dropdown,
+  InputGroup,
+  Card,
+  Row,
+  Col,
+  Alert,
+  Modal,
+  ListGroup,
+} from "react-bootstrap";
 
 function ResidentInfo() {
   const residents = useSelector((store) => store.residentsReducer);
@@ -42,41 +54,51 @@ function ResidentInfo() {
   }, []);
 
   return (
-    <div id="ResidentInfo-Return" className="container">
-      <h2 style={{marginLeft: "70px"}}>Resident Info</h2>
-      <div className="container">
-        <Card style={{ width: "500px", height: "auto", border: "0"}}>
-          <Card.Body>
-            <Card.Img style={{width: "200px", height: "200px"}} variant="top" src="/images/default-profile-picture.jpg" />
-            <Card.Text>
-              {resident[0]?.first_name} {resident[0]?.last_name}
-            </Card.Text>
-            <Card.Text>ID: {resident[0]?.room_number}</Card.Text>
-            <Card.Text>Allergies: {resident[0]?.allergies}</Card.Text>
-            <Card.Text>
-              Birthday: {moment(resident[0]?.birthday).format("MM/DD/YYYY")}
-            </Card.Text>
-          </Card.Body>
-        </Card>
-      </div>
+    <div className="container">
+      <h2>Resident Info</h2>
+      <Row className="mb-4">
+        <Col>
+          <div className="container">
+            <Card style={{ width: "auto", height: "auto", border: "0" }}>
+              <Card.Body className="d-flex flex-row">
+                <Card.Img
+                  style={{ width: "200px", height: "200px" }}
+                  variant="top"
+                  src="/images/default-profile-picture.jpg"
+                />
+                <Card.Body className="residentInfoText">
+                  <Card.Text className="residentInfoName">
+                    {resident[0]?.first_name} {resident[0]?.last_name}
+                  </Card.Text>
+                  <Card.Text className="residentInfoID"><strong>ID:</strong> {resident[0]?.room_number}</Card.Text>
+                  <Card.Text className="residentInfoAllergy"><strong>Allergies:</strong> {resident[0]?.allergies}</Card.Text>
+                  <Card.Text className="residentInfoBirthday">
+                    <strong>Birthday:</strong>{" "}
+                    {moment(resident[0]?.birthday).format("MM/DD/YYYY")}
+                  </Card.Text>
+                </Card.Body>
+              </Card.Body>
+            </Card>
+          </div>
+        </Col>
+        <div>
+          <button onClick={() => history.push("/residents")}>
+            Back to Active Residents
+          </button>
+        </div>
 
-      <div>
-        <button style={{marginLeft: "70px"}} onClick={() => history.push("/residents")}>
-          Back to Active Residents
-        </button>
-      </div>
-
-      <div className="container">
-        {tasks.map((task, i) => (
-          <TaskDetail
-            id="tasks-resident-info"
-            key={i}
-            task={task}
-            residentId={id}
-            filteredTasksResidents={filteredTasksResidents}
-          />
-        ))}
-      </div>
+        <div className="container">
+          {tasks.map((task, i) => (
+            <TaskDetail
+              id="tasks-resident-info"
+              key={i}
+              task={task}
+              residentId={id}
+              filteredTasksResidents={filteredTasksResidents}
+            />
+          ))}
+        </div>
+      </Row>
     </div>
   );
 }

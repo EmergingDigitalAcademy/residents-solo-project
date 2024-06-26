@@ -51,7 +51,9 @@ function ActiveResidents() {
                       src="/images/default-profile-picture.jpg"
                     />
                     </Card.Body>
-                    <Card.Body>
+                    <Card.Body onClick={() => {
+                      history.push(`/tasks/${resident.id}`);
+                    }}>
                     <Card.Text>
                       {resident.first_name} {resident.last_name}
                     </Card.Text>

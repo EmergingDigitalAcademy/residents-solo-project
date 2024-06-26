@@ -5,3 +5,15 @@
 #ResidentInfo-Return {
     margin-left: 100px;
 }
+
+/* .residentInfoText{
+    font-size: 20px;
+} */
+
+.residentInfoID, .residentInfoBirthday, .residentInfoAllergy{
+    font-size: 20px;
+}
+
+.residentInfoName{
+    font-size: 30px;
+}
