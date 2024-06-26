@@ -1,9 +1,23 @@
 import { useSelector } from "react-redux";
 import { useEffect } from "react";
 import { useDispatch } from "react-redux";
-import Button from "react-bootstrap/Button";
 import { useHistory } from "react-router-dom/cjs/react-router-dom.min";
 import { useParams } from "react-router-dom/cjs/react-router-dom.min";
+import "./AddAllergies.css";
+import {
+  Container,
+  Navbar,
+  Nav,
+  Button,
+  Dropdown,
+  InputGroup,
+  Card,
+  Row,
+  Col,
+  Alert,
+  Modal,
+  ListGroup,
+} from "react-bootstrap";
 
 function AddRemoveAllergies() {
   const allergiesReducer = useSelector((store) => store.allergiesReducer);
@@ -50,33 +64,53 @@ function AddRemoveAllergies() {
 
   return (
     <div className="container">
-      <h2>Allergies</h2>
-
-      {allergiesReducer.map((allergy, i) => (
-        <div key={i}>
-          <div>
-            type: {allergy.type}
-            {residentAllergies.some(
-              (ra) =>
-                Number(ra.resident_id) === Number(resident_id) &&
-                Number(ra.allergies_id) === Number(allergy.id)
-            ) ? (
-              <Button onClick={() => handleRemoveAllergies(allergy)}>
-                Remove Allergy
-              </Button>
-            ) : (
-              <Button onClick={() => handleAddAllergies(allergy)}>
-                Add Allergy
-              </Button>
-            )}
-          </div>
+      <h2 className="AllergyTitle">Allergies</h2>
+      <Row>
+        <div>
+          <button className="backbtnAllergy" onClick={() => history.push("/residents")}>
+            Back to Active Residents
+          </button>
         </div>
-      ))}
-      <div>
-        <Button onClick={() => history.push("/residents")}>
-          Back to Active Residents
-        </Button>
-      </div>
+        <Col xs={12} md={5}>
+          <Card style={{ border: "0" }}>
+            <Card.Body>
+              <Card.Title>Type of Allergies</Card.Title>
+              <ListGroup >
+                {allergiesReducer.map((allergy, i) => (
+                  <div key={i}>
+                    <ListGroup.Item >
+                      <strong>{allergy.type}</strong>
+                    </ListGroup.Item>
+                    <ListGroup.Item >
+                      <div>
+                        {residentAllergies.some(
+                          (ra) =>
+                            Number(ra.resident_id) === Number(resident_id) &&
+                            Number(ra.allergies_id) === Number(allergy.id)
+                        ) ? (
+                          <button
+                            className="allergybtn"
+                            onClick={() => handleRemoveAllergies(allergy)}
+                          >
+                            Remove Allergy
+                          </button>
+                        ) : (
+                          <button
+                            className="allergybtn"
+                            onClick={() => handleAddAllergies(allergy)}
+                          >
+                            Add Allergy
+                          </button>
+                        )}
+                      </div>
+                    </ListGroup.Item>
+                  </div>
+                ))}
+              </ListGroup>
+            </Card.Body>
+          </Card>
+        </Col>
+      </Row>
     </div>
   );
 }

@@ -1,0 +1,21 @@
+.allergybtn{
+    justify-content: right;
+}
+
+.allergybtn:hover{
+    background-color: teal;
+}
+
+.AllergyTitle{
+    margin-left: 18px;
+}
+
+.backbtnAllergy{
+    margin-top: 15px;
+    margin-bottom: 15px;
+    margin-left: 18px;
+}
+
+.backbtnAllergy:hover{
+    background-color: teal;
+}
