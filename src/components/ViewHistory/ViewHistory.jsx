@@ -36,9 +36,9 @@ function ViewHistory() {
         </div>
       </div>
       <div>
-        <Button onClick={() => history.push("/allResidents")}>
+        <button className="viewHistorybackbtn" onClick={() => history.push("/allResidents")}>
           Back to All Residents
-        </Button>
+        </button>
       </div>
       <Table striped bordered hover>
         <thead>

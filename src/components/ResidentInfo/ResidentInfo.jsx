@@ -87,7 +87,10 @@ function ResidentInfo() {
         </Col>
         <Col xs="12">
           <div className="container">
-            <button className="backbtnResidentInfo" onClick={() => history.push("/residents")}>
+            <button
+              className="backbtnResidentInfo"
+              onClick={() => history.push("/residents")}
+            >
               Back to Active Residents
             </button>
           </div>

@@ -4,20 +4,7 @@ import { useDispatch } from "react-redux";
 import { useHistory } from "react-router-dom/cjs/react-router-dom.min";
 import "./ActiveResidents.css";
 import moment from "moment";
-import {
-  Container,
-  Navbar,
-  Nav,
-  Button,
-  Dropdown,
-  InputGroup,
-  Card,
-  Row,
-  Col,
-  Alert,
-  Modal,
-  ListGroup,
-} from "react-bootstrap";
+import { Card, Row, Col } from "react-bootstrap";
 
 function ActiveResidents() {
   const user = useSelector((store) => store.user);

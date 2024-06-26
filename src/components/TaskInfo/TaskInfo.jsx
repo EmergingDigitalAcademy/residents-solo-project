@@ -3,7 +3,7 @@ import { useEffect } from "react";
 import { useDispatch } from "react-redux";
 import { useHistory } from "react-router-dom/cjs/react-router-dom.min";
 import { useParams } from "react-router-dom/cjs/react-router-dom.min";
-import './TaskInfo.css';
+import "./TaskInfo.css";
 import {
   Container,
   Navbar,
@@ -55,36 +55,40 @@ function TaskInfo() {
       <Row>
         <Col xs="12">
           <div className="container">
-            <Card className="taskInfoName" style={{ width: "18rem", border: "0"}}>
+            <Card
+              className="taskInfoName"
+              style={{ width: "18rem", border: "0" }}
+            >
               <Card.Body>
-                <Card.Text>
-                  {tasks[0]?.name} 
-                </Card.Text>
+                <Card.Text>{tasks[0]?.name}</Card.Text>
               </Card.Body>
             </Card>
           </div>
         </Col>
         <Col xs="12">
           <div className="container">
-            <button className="backbtnTaskInfo" onClick={() => history.push(`/tasks/${resident_id}`)}>
+            <button
+              className="backbtnTaskInfo"
+              onClick={() => history.push(`/tasks/${resident_id}`)}
+            >
               Back to Resident Info
             </button>
           </div>
         </Col>
         <Col xs="12">
-        {assistanceReducer.map((assistance, i) => (
-          <div className="container, taskInfoCard" key={assistance.id}>
-            <Card style={{ width: "18rem" }}>
-              <Card.Body className="taskInfocardbody">
-                <Card.Text
-                  onClick={() => handleUpdateTask(assistance.id, params)}
-                >
-                  {assistance.type}
-                </Card.Text>
-              </Card.Body>
-            </Card>
-          </div>
-        ))}
+          {assistanceReducer.map((assistance, i) => (
+            <div className="container, taskInfoCard" key={assistance.id}>
+              <Card style={{ width: "18rem" }}>
+                <Card.Body className="taskInfocardbody">
+                  <Card.Text
+                    onClick={() => handleUpdateTask(assistance.id, params)}
+                  >
+                    {assistance.type}
+                  </Card.Text>
+                </Card.Body>
+              </Card>
+            </div>
+          ))}
         </Col>
       </Row>
     </div>

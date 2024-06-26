@@ -9,7 +9,8 @@ function TaskDetail({ task, residentId, filteredTasksResidents }) {
     <div className="container, taskDetailCard">
       <Card
         style={{
-          width: "18rem", cursor: "pointer",
+          width: "18rem",
+          cursor: "pointer",
           backgroundColor: filteredTasksResidents?.find(
             (r) => Number(r.tasks_id) === Number(task.id)
           )?.assistance_id
@@ -17,7 +18,8 @@ function TaskDetail({ task, residentId, filteredTasksResidents }) {
             : "white",
         }}
       >
-        <Card.Body className="taskdetailcardbody"
+        <Card.Body
+          className="taskdetailcardbody"
           onClick={() => {
             history.push(`/residents/${residentId}/tasks/${task.id}`);
           }}

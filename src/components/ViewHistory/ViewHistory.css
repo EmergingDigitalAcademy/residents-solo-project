@@ -1,3 +1,11 @@
 #history-resident-name {
     font-size: 30px;
 }
+
+.viewHistorybackbtn:hover{
+    background-color: teal;
+}
+
+.viewHistorybackbtn{
+    margin-bottom: 20px;
+}
