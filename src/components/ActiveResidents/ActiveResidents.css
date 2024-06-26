@@ -8,3 +8,11 @@
     height: auto;
     width: auto;
 }
+
+.activeResidentbtn:hover {
+    background-color: teal;
+}
+
+.cardActiveResident:hover {
+    border-color: teal;
+}
