@@ -41,10 +41,10 @@ function AssignResident() {
 
   return (
     <div className="container">
-      <h2>Housing</h2>
+      <h2 className="housingtitle">Housing</h2>
       <Row>
         <div>
-          <button onClick={() => history.push("/residents")}>
+          <button className="backbtnHousing" onClick={() => history.push("/residents")}>
             Back to Active Residents
           </button>
         </div>
