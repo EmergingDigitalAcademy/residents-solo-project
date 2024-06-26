@@ -42,7 +42,7 @@ function ResidentInfo() {
   }, []);
 
   return (
-    <div>
+    <div id="ResidentInfo-Return" className="container">
       <h2 style={{marginLeft: "70px"}}>Resident Info</h2>
       <div className="container">
         <Card style={{ width: "500px", height: "auto", border: "0"}}>
@@ -61,9 +61,9 @@ function ResidentInfo() {
       </div>
 
       <div>
-        <Button style={{marginLeft: "70px"}} onClick={() => history.push("/residents")}>
+        <button style={{marginLeft: "70px"}} onClick={() => history.push("/residents")}>
           Back to Active Residents
-        </Button>
+        </button>
       </div>
 
       <div className="container">

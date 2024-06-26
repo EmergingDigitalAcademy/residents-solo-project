@@ -1,9 +1,26 @@
 import { useSelector } from "react-redux";
 import { useState, useEffect } from "react";
 import { useDispatch } from "react-redux";
-import Button from "react-bootstrap/Button";
-import Card from "react-bootstrap/Card";
 import { useHistory } from "react-router-dom/cjs/react-router-dom.min";
+import './AdmitResident.css';
+import {
+  Container,
+  Navbar,
+  Nav,
+  Button,
+  Dropdown,
+  Form,
+  FormControl,
+  ToggleButton,
+  ToggleButtonGroup,
+  InputGroup,
+  Card,
+  Row,
+  Col,
+  Alert,
+  Modal,
+  ListGroup,
+} from 'react-bootstrap';
 
 function AdmitResident() {
   //    const residents = useSelector((store) => store.residentsReducer);
@@ -40,28 +57,71 @@ function AdmitResident() {
   return (
     <div className="container">
       <h2>Admit Resident</h2>
-      <form onSubmit={handleSubmit}>
-        <input
-          onChange={(e) => setNewResident({...newResident, first_name: e.target.value})}
-          value={newResident.first_name}
-          placeholder="First Name"
-        />
-        <input
-          onChange={(e) => setNewResident({...newResident, last_name: e.target.value})}
-          value={newResident.last_name}
-          placeholder="Last Name"
-        />
-        <input
-          onChange={(e) => setNewResident({...newResident, birthday: e.target.value})}
-          value={newResident.birthday}
-          placeholder="Birthday"
-        />
-        <input
-          onChange={(e) => setNewResident({...newResident, image: e.target.value})}
-          value={newResident.image}
-          placeholder="Image"
-        />
-        <label>
+      <div>
+      <Form onSubmit={handleSubmit}>
+      <Row className="mb-4">
+        <Col id="columnadmit" xs={12} md={6} lg={3}>
+          <Card>
+            <Card.Body>
+              <Card.Title>First Name</Card.Title>
+              <InputGroup className="mb-3">
+                <FormControl
+                  placeholder="First Name"
+                  aria-label="Enter text"
+                  value={newResident.first_name}
+                  onChange={(e) => setNewResident({...newResident, first_name: e.target.value})}
+                />
+              </InputGroup>
+            </Card.Body>
+          </Card>
+        </Col>
+        <Col id="columnadmit" xs={12} md={6} lg={3}>
+          <Card>
+            <Card.Body>
+              <Card.Title>Last Name</Card.Title>
+              <InputGroup className="mb-3">
+                <FormControl
+                  placeholder="Last Name"
+                  aria-label="Enter text"
+                  value={newResident.last_name}
+                  onChange={(e) => setNewResident({...newResident, last_name: e.target.value})}
+                />
+              </InputGroup>
+            </Card.Body>
+          </Card>
+        </Col>
+        <Col id="columnadmit" xs={12} md={6} lg={3}>
+          <Card>
+            <Card.Body>
+              <Card.Title>Birthday</Card.Title>
+              <InputGroup className="mb-3">
+                <FormControl
+                  placeholder="YYYY-MM-DD"
+                  aria-label="Enter text"
+                  value={newResident.birthday}
+                  onChange={(e) => setNewResident({...newResident, birthday: e.target.value})}
+                />
+              </InputGroup>
+            </Card.Body>
+          </Card>
+        </Col>
+        <Col id="columnadmit" xs={12} md={6} lg={3}>
+          <Card>
+            <Card.Body>
+              <Card.Title>Image</Card.Title>
+              <InputGroup className="mb-3">
+                <FormControl
+                  placeholder="Image"
+                  aria-label="Enter text"
+                  value={newResident.image}
+                  onChange={(e) => setNewResident({...newResident, image: e.target.value})}
+                />
+              </InputGroup>
+            </Card.Body>
+          </Card>
+        </Col>
+        <Col id="columnadmit" xs={3}>
+        <label id="labelradio">
         <input
           type="radio"
           id="short"
@@ -75,7 +135,7 @@ function AdmitResident() {
         />
         Short
       </label>
-      <label>
+      <label id="labelradio">
         <input
           type="radio"
           id="long"
@@ -89,8 +149,11 @@ function AdmitResident() {
         />
         Long
         </label>
-        <button type="submit">Add Resident</button>
-      </form>
+        <button id="admitbtn" type="submit">Add Resident</button>
+        </Col>
+      </Row>
+      </Form>
+      </div>
     </div>
   );
 }
