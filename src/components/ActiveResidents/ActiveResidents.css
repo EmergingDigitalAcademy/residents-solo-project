@@ -5,8 +5,8 @@
 }
 
 #active-resident-img {
-    height: auto;
-    width: auto;
+    height: 150px;
+    width: 200px;
 }
 
 .activeResidentbtn:hover {

@@ -44,10 +44,10 @@ function ActiveResidents() {
                         history.push(`/tasks/${resident.id}`);
                       }}
                     >
-                      <Card.Img
+                      <Card.Img className="active-resident-img"
                         id="active-resident-img"
                         variant="top"
-                        src="/images/default-profile-picture.jpg"
+                        src={resident.image ?? "/images/default-profile-picture.jpg"}
                       />
                     </Card.Body>
                     <Card.Body
