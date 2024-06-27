@@ -9,12 +9,20 @@ import { Card, Row, Col } from "react-bootstrap";
 function ActiveResidents() {
   const user = useSelector((store) => store.user);
   const residents = useSelector((store) => store.residentsReducer);
+  const tasksResidents = useSelector((store) => store.tasksResidentsReducers);
   const dispatch = useDispatch();
   const history = useHistory();
 
   useEffect(() => {
     dispatch({ type: "FETCH_RESIDENTS" });
+    dispatch({ type: "FETCH_TASKS_RESIDENTS" })
   }, []);
+
+  const allComplete = (res) => {
+    const tasksByResident = tasksResidents?.filter((s) => Number(s.resident_id) === Number(res.id));
+    const allTrue = tasksByResident.every((g) => g.assistance_id);
+    return allTrue;
+  }
 
   return (
     <div className="container">
@@ -27,7 +35,7 @@ function ActiveResidents() {
               <div className="active-residents" key={i}>
                 <Card
                   className="cardActiveResident"
-                  style={{ width: "200px", height: "auto" }}
+                  style={{ width: "200px", height: "auto", backgroundColor: allComplete(resident) ? "green" : "white" }}
                 >
                   <div>
                     <Card.Body
