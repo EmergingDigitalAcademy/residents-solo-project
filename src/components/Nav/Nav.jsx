@@ -1,8 +1,8 @@
-import React from 'react';
-import { Link } from 'react-router-dom';
-import LogOutButton from '../LogOutButton/LogOutButton';
-import './Nav.css';
-import { useSelector } from 'react-redux';
+import React from "react";
+import { Link } from "react-router-dom";
+import LogOutButton from "../LogOutButton/LogOutButton";
+import "./Nav.css";
+import { useSelector } from "react-redux";
 
 function Nav() {
   const user = useSelector((store) => store.user);
@@ -21,26 +21,7 @@ function Nav() {
           </Link>
         )}
 
-        {/* If a user is logged in, show these links */}
-        {user.id && (
-          <>
-            <Link className="navLink" to="/residents">
-              Active Residents
-            </Link>
-
-            <Link className="navLink" to="/user">
-              Home
-            </Link>
-
-            {/* <Link className="navLink" to="/info">
-              Info Page
-            </Link> */}
-
-            <LogOutButton className="navLink" />
-          </>
-        )}
-
-        {user.role === 'admin' && (
+        {user.role === "admin" && (
           <>
             <Link className="navLink" to="/residents/admit">
               Admit Resident
@@ -49,6 +30,25 @@ function Nav() {
             <Link className="navLink" to="/allResidents">
               All Residents Info
             </Link>
+          </>
+        )}
+
+        {/* If a user is logged in, show these links */}
+        {user.id && (
+          <>
+            <Link className="navLink" to="/residents">
+              Active Residents
+            </Link>
+
+            {/* <Link className="navLink" to="/user">
+              Home
+            </Link> */}
+
+            {/* <Link className="navLink" to="/info">
+              Info Page
+            </Link> */}
+
+            <LogOutButton className="navLink" />
           </>
         )}
 

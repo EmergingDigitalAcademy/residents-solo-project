@@ -56,11 +56,11 @@ function ActiveResidents() {
                       }}
                     >
                       <Card.Text>
-                        {resident.first_name} {resident.last_name}
+                        <strong>{resident.first_name} {resident.last_name}</strong>
                       </Card.Text>
-                      <Card.Text>ID: {resident.room_number}</Card.Text>
+                      <Card.Text><strong>Room ID:</strong> {resident.room_number}</Card.Text>
                       <Card.Text>
-                        Birthday:{" "}
+                        <strong>Birthday:</strong>{" "}
                         {moment(resident.birthday).format("MM/DD/YYYY")}
                       </Card.Text>
                     </Card.Body>

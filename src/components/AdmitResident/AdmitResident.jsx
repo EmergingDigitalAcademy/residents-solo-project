@@ -1,32 +1,19 @@
-import { useSelector } from "react-redux";
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { useDispatch } from "react-redux";
-import { useHistory } from "react-router-dom/cjs/react-router-dom.min";
 import "./AdmitResident.css";
 import {
-  Container,
-  Navbar,
-  Nav,
-  Button,
-  Dropdown,
   Form,
   FormControl,
-  ToggleButton,
   ToggleButtonGroup,
   InputGroup,
   Card,
   Row,
   Col,
-  Alert,
-  Modal,
-  ListGroup,
 } from "react-bootstrap";
 
 function AdmitResident() {
-  //    const residents = useSelector((store) => store.residentsReducer);
   const [term, setTerm] = useState("short");
   const initialResident = {
-    image: "default-profile-picture.jpg",
     first_name: "",
     last_name: "",
     birthday: "",
@@ -34,8 +21,6 @@ function AdmitResident() {
   };
   const [newResident, setNewResident] = useState(initialResident);
   const dispatch = useDispatch();
-
-  const history = useHistory();
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -120,7 +105,7 @@ function AdmitResident() {
                 </Card.Body>
               </Card>
             </Col>
-            <Col id="columnadmit" xs={12} md={6} lg={3}>
+            {/* <Col id="columnadmit" xs={12} md={6} lg={3}>
               <Card>
                 <Card.Body>
                   <Card.Title>Image</Card.Title>
@@ -139,9 +124,9 @@ function AdmitResident() {
                   </InputGroup>
                 </Card.Body>
               </Card>
-            </Col>
+            </Col> */}
             <Col id="columnadmit" xs={12} md={6} lg={3}>
-              <Card>
+              <Card style={{ height: "120px" }}>
                 <Card.Body>
                   <Card.Title>Length of Stay</Card.Title>
                   <ToggleButtonGroup type="radio" name="term">

@@ -64,7 +64,7 @@ function ResidentInfo() {
                 <Card.Img
                   style={{ width: "200px", height: "200px" }}
                   variant="top"
-                  src="/images/default-profile-picture.jpg"
+                  src={ resident[0].image ?? "/images/default-profile-picture.jpg"}
                 />
                 <Card.Body className="residentInfoText">
                   <Card.Text className="residentInfoName">
