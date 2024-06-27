@@ -14,7 +14,8 @@ function LandingPage() {
   };
 
   return (
-    <div className="container landingPage">
+    <div className="landingPage vh-100 vh-100">
+      <div className="container">
       <h2>{heading}</h2>
 
       <div className="grid">
@@ -36,6 +37,7 @@ function LandingPage() {
             </button>
           </center>
         </div>
+      </div>
       </div>
     </div>
   );
