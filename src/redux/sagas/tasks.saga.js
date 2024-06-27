@@ -42,6 +42,7 @@ function* updateTasks(action) {
       action.payload
     );
     yield put({ type: "FETCH_TASKS" });
+    yield put({ type: "FETCH_TASKS_RESIDENTS"});
   } catch (error) {
     console.error(`Error updating task`, error);
   }
