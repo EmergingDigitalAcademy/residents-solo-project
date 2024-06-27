@@ -18,7 +18,7 @@ function ActiveResidents() {
 
   return (
     <div className="container">
-      <h2>Active Residents</h2>
+      <h2 className="activeResidentsTitle">Active Residents</h2>
       <Row className="mb-4">
         <Col>
           {residents

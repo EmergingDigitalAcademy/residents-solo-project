@@ -2,6 +2,16 @@
 Grid
 -------------------------------------------------------------------------------- */
 
+/* .registerLandingPage{
+
+} */
+
+
+
+.login {
+  margin-bottom: 10px;
+}
+
 .grid {
   display: flex;
   flex: 0 1 auto;

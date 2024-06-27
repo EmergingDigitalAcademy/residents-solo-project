@@ -55,7 +55,7 @@ function ResidentInfo() {
 
   return (
     <div className="container">
-      <h2>Resident Info</h2>
+      <h2 className="residentInfoTitle">Resident Info</h2>
       <Row className="mb-4">
         <Col xs="12">
           <div className="container">

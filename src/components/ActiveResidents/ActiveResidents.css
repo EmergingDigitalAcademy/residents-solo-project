@@ -21,3 +21,7 @@
 .cardActiveResident {
     background-color: teal;
 }
+
+.activeResidentsTitle{
+    margin-left: 20px;
+}

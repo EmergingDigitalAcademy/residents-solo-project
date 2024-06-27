@@ -7,10 +7,18 @@
     background-color: teal;
 }
 
+.backbtnTaskInfo{
+    margin-left: 10px;
+}
+
 .taskInfoName {
     font-size: 25px;
 }
 
 .taskInfocardbody:hover {
     cursor: pointer;
+}
+
+.taskInfoTitle{
+    margin-left: 30px;
 }
