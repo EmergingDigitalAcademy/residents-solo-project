@@ -5,7 +5,6 @@ const {
   rejectUnauthenticated,
 } = require("../modules/authentication-middleware");
 
-
 //THIS WORKS
 router.get("/", rejectUnauthenticated, (req, res) => {
   console.log("/resident GET route");
@@ -74,15 +73,17 @@ router.post("/admit", rejectUnauthenticated, async (req, res) => {
     //1. select all task types from task table
     const taskResult = await pool.query(`SELECT "id" FROM "tasks";`);
     //2. loop through taskResult
-    // insert into tasks_residents table: 
+    // insert into tasks_residents table:
     // INSERT INTO "tasks_residents" ("tasks_id", "resident_id", "user_id")
     // VALUES ($1, $2, $3);
-    taskResult.rows.forEach(async task => {
-        await pool.query(`INSERT INTO "tasks_residents" ("tasks_id", "resident_id", "user_id")
+    taskResult.rows.forEach(async (task) => {
+      await pool.query(
+        `INSERT INTO "tasks_residents" ("tasks_id", "resident_id", "user_id")
         VALUES ($1, $2, NULL);
-        `, [task.id, residentId])
+        `,
+        [task.id, residentId]
+      );
     });
-    
 
     res.sendStatus(201);
   } catch (err) {
@@ -92,52 +93,55 @@ router.post("/admit", rejectUnauthenticated, async (req, res) => {
 });
 
 router.get("/allergies/:id", rejectUnauthenticated, async (req, res) => {
-    console.log("/residents/residents_allergies POST route");
-    console.log("req params id log", req.params.id);
-    console.log("is authenticated?", req.isAuthenticated);
-    console.log("user", req.user);
+  console.log("/residents/residents_allergies POST route");
+  console.log("req params id log", req.params.id);
+  console.log("is authenticated?", req.isAuthenticated);
+  console.log("user", req.user);
 
-    let queryText = `
+  let queryText = `
     SELECT "allergies"."type" FROM "allergies"
     JOIN "resident_allergies"
     ON "resident_allergies"."allergies_id" = "allergies"."id"
     WHERE "resident_allergies"."resident_id" = $1;
     `;
-    pool.query(queryText, [req.params.resident_id]).then((result) => {
-        res.send(result.rows)
+  pool
+    .query(queryText, [req.params.resident_id])
+    .then((result) => {
+      res.send(result.rows);
     })
     .catch((error) => {
-        console.log(error);
-        res.sendStatus(500);
-      });
-})
+      console.log(error);
+      res.sendStatus(500);
+    });
+});
 
 router.get("/allergies", rejectUnauthenticated, async (req, res) => {
-    console.log("/residents/residents_allergies POST route");
-    console.log("req params id log", req.params.id);
-    console.log("is authenticated?", req.isAuthenticated);
-    console.log("user", req.user);
+  console.log("/residents/residents_allergies POST route");
+  console.log("req params id log", req.params.id);
+  console.log("is authenticated?", req.isAuthenticated);
+  console.log("user", req.user);
 
-    let queryText = `
+  let queryText = `
     SELECT * FROM "allergies";
     `;
-    pool.query(queryText).then((result) => {
-        res.send(result.rows)
+  pool
+    .query(queryText)
+    .then((result) => {
+      res.send(result.rows);
     })
     .catch((error) => {
-        console.log(error);
-        res.sendStatus(500);
-      });
-})
+      console.log(error);
+      res.sendStatus(500);
+    });
+});
 
 //THIS WORKS
 router.post("/allergies", rejectUnauthenticated, async (req, res) => {
   console.log("/residents/residents_allergies POST route");
   console.log("is authenticated?", req.isAuthenticated);
-  const {resident_id, allergies} = req.body;
+  const { resident_id, allergies } = req.body;
   console.log("resident id: ", resident_id);
-  console.log('resident allergies: ', allergies);
-
+  console.log("resident allergies: ", allergies);
 
   try {
     let allergyQueryString = `
@@ -145,10 +149,9 @@ router.post("/allergies", rejectUnauthenticated, async (req, res) => {
     ("resident_id", "allergies_id")
     VALUES
     ($1, $2);`;
-    allergies.forEach( async (allergy) => {
-        await pool.query(allergyQueryString, [resident_id, allergy.id])
-
-    })
+    allergies.forEach(async (allergy) => {
+      await pool.query(allergyQueryString, [resident_id, allergy.id]);
+    });
 
     res.sendStatus(201);
     // const result = await pool.query(insertAllergiesQuery, insertAllergiesValues);
@@ -159,47 +162,56 @@ router.post("/allergies", rejectUnauthenticated, async (req, res) => {
 });
 
 router.get("/allAllergies", rejectUnauthenticated, async (req, res) => {
-    try{
-        const queryText = `
+  try {
+    const queryText = `
             SELECT * FROM "resident_allergies";
         `;
-       const result = await pool.query(queryText);
-        res.send(result.rows);
-    }catch (error) {
-        console.error(error);
-        res.sendStatus(500);
-    }
-})
+    const result = await pool.query(queryText);
+    res.send(result.rows);
+  } catch (error) {
+    console.error(error);
+    res.sendStatus(500);
+  }
+});
 
-router.delete("/allergies/:allergyId", rejectUnauthenticated, async (req, res) => {
-    console.log('delete allergy req body', req.params.allergyId);
+router.delete(
+  "/allergies/:allergyId",
+  rejectUnauthenticated,
+  async (req, res) => {
+    console.log("delete allergy req body", req.params.allergyId);
 
-    try{
-        await pool.query(`DELETE FROM "resident_allergies"
-        WHERE id = $1;`, [Number(req.params.allergyId)])
-        res.sendStatus(200);
-    }catch (error) {
-        console.error(error);
-        res.sendStatus(500);
+    try {
+      await pool.query(
+        `DELETE FROM "resident_allergies"
+        WHERE id = $1;`,
+        [Number(req.params.allergyId)]
+      );
+      res.sendStatus(200);
+    } catch (error) {
+      console.error(error);
+      res.sendStatus(500);
     }
-})
+  }
+);
 
 router.get("/housing", rejectUnauthenticated, async (req, res) => {
-    console.log("/residents/housing GET route");
-    console.log("is authenticated", req.isAuthenticated);
-    console.log("user", req.user);
+  console.log("/residents/housing GET route");
+  console.log("is authenticated", req.isAuthenticated);
+  console.log("user", req.user);
 
-    let queryText = `
+  let queryText = `
     SELECT * FROM "housing" ORDER BY "room_number" ASC;
     `;
-    pool.query(queryText).then((result) => {
-        res.send(result.rows)
+  pool
+    .query(queryText)
+    .then((result) => {
+      res.send(result.rows);
     })
     .catch((error) => {
-        console.log(error);
-        res.sendStatus(500);
-      });
-})
+      console.log(error);
+      res.sendStatus(500);
+    });
+});
 
 //THIS WORKS
 router.put("/housing", rejectUnauthenticated, async (req, res) => {
@@ -221,14 +233,15 @@ router.put("/housing", rejectUnauthenticated, async (req, res) => {
   // if it does, then first find the room_number that has the resident currently assinged to.
   // set the resident_id to NULL.
   try {
+    //query to creates a log
+    const logType = 3;
+    const prevValueQuery = `SELECT "room_number" FROM "housing" WHERE "resident_id" = $1`;
+    const resultPrev = await pool.query(prevValueQuery, [req.body.resident_id]);
+    console.log("my previous room", resultPrev.rows[0]?.room_number);
 
-     //query to creates a log
-     const logType = 3;
-     const prevValueQuery = `SELECT "room_number" FROM "housing" WHERE "resident_id" = $1`;
-     const resultPrev = await pool.query(prevValueQuery, [req.body.resident_id]);
-     console.log('my previous room', resultPrev.rows[0]?.room_number);
-
-     const prevRoom = resultPrev.rows[0]?.room_number ? resultPrev.rows[0].room_number : null;
+    const prevRoom = resultPrev.rows[0]?.room_number
+      ? resultPrev.rows[0].room_number
+      : null;
 
     await pool.query(
       `
@@ -246,14 +259,18 @@ router.put("/housing", rejectUnauthenticated, async (req, res) => {
             WHERE "room_number" = $1;`,
       [req.body.room_number, req.body.resident_id]
     );
-    
-    
+
     const query2 = `
            INSERT INTO "transaction_residents" ("transaction_id", "resident_id", "previous", "current", "date")
            VALUES ($1, $2, $3, $4, NOW());
            `;
 
-    await pool.query(query2, [logType, req.body.resident_id, prevRoom, req.body.room_number]);
+    await pool.query(query2, [
+      logType,
+      req.body.resident_id,
+      prevRoom,
+      req.body.room_number,
+    ]);
     res.sendStatus(201);
   } catch (err) {
     console.error(err);
@@ -262,80 +279,90 @@ router.put("/housing", rejectUnauthenticated, async (req, res) => {
 });
 
 //THIS WORKS
-router.put('/archive/:id', rejectUnauthenticated, async (req, res) => {
-    console.log('/archive/:id PUT route');
-    console.log('is authenticated', req.isAuthenticated());
+router.put("/archive/:id", rejectUnauthenticated, async (req, res) => {
+  console.log("/archive/:id PUT route");
+  console.log("is authenticated", req.isAuthenticated());
 
-    try{
-        const logType = 6;
-        await pool.query (
-            `
+  try {
+    const logType = 6;
+    await pool.query(
+      `
                 UPDATE "residents"
                 SET "discharge_date" = NOW(), "status" = $2
                 WHERE "id" = $1
-            `, [req.params.id, "Discharged"]
-        )
+            `,
+      [req.params.id, "Discharged"]
+    );
 
-        await pool.query(
-            `
+    await pool.query(
+      `
               UPDATE "housing"
               SET "resident_id" = NULL
               WHERE "resident_id" = $1;`,
-            [req.params.id]
-          );
+      [req.params.id]
+    );
 
-        const query2 = `
+    const query2 = `
             INSERT INTO "transaction_residents" ("transaction_id", "resident_id", "date")
             VALUES ($1, $2, NOW())
         `;
-        console.log([logType, req.params.id])
-        await pool.query(query2, [logType, req.params.id]);
-        res.sendStatus(201)
-    } catch (err) {
-        console.error(err);
-        res.sendStatus(500);
-      }
-})
+    console.log([logType, req.params.id]);
+    await pool.query(query2, [logType, req.params.id]);
+    res.sendStatus(201);
+  } catch (err) {
+    console.error(err);
+    res.sendStatus(500);
+  }
+});
 
-router.get('/:id/tasks/:id', rejectUnauthenticated, (req, res) => {
-    console.log('/residents/:id/tasks/:id GET route');
-    console.log(req.params)
-    let queryText = `SELECT * FROM "assistance";`;
-    pool.query(queryText).then((result) => {
-        res.send(result.rows);
-    }).catch((error) => {
-        console.log(error);
-        res.sendStatus(500);
+router.get("/:id/tasks/:id", rejectUnauthenticated, (req, res) => {
+  console.log("/residents/:id/tasks/:id GET route");
+  console.log(req.params);
+  let queryText = `SELECT * FROM "assistance";`;
+  pool
+    .query(queryText)
+    .then((result) => {
+      res.send(result.rows);
+    })
+    .catch((error) => {
+      console.log(error);
+      res.sendStatus(500);
     });
 });
 
 // assistances
-router.get('/assistances', rejectUnauthenticated, (req, res) => {
-    console.log('/assistances GET route');
-    console.log(req.params)
-    let queryText = `SELECT * FROM "assistance";`;
-    pool.query(queryText).then((result) => {
-        res.send(result.rows);
-    }).catch((error) => {
-        console.log(error);
-        res.sendStatus(500);
+router.get("/assistances", rejectUnauthenticated, (req, res) => {
+  console.log("/assistances GET route");
+  console.log(req.params);
+  let queryText = `SELECT * FROM "assistance";`;
+  pool
+    .query(queryText)
+    .then((result) => {
+      res.send(result.rows);
+    })
+    .catch((error) => {
+      console.log(error);
+      res.sendStatus(500);
     });
 });
 
-router.get('/view_history/:id', rejectUnauthenticated, (req, res) => {
-    console.log('/residents/view_history/:id GET route', req.params.id);
+router.get("/view_history/:id", rejectUnauthenticated, (req, res) => {
+  console.log("/residents/view_history/:id GET route", req.params.id);
 
-    let queryText = `SELECT "transactions_log"."log_type", "transaction_residents"."date", "transaction_residents"."current" AS "Room_Number"
+  let queryText = `SELECT "transactions_log"."log_type", "transaction_residents"."date", "transaction_residents"."current" AS "Room_Number"
     FROM transaction_residents
     JOIN transactions_log
     ON transaction_residents.transaction_id = transactions_log.id
     WHERE transaction_residents.resident_id = $1
     ORDER BY "transaction_residents"."date" DESC;
     `;
-    pool.query(queryText, [req.params.id]).then((result) => {
-        res.send(result.rows);
-    }).catch((error) => {
-        res.sendStatus(500);
+  pool
+    .query(queryText, [req.params.id])
+    .then((result) => {
+      res.send(result.rows);
+    })
+    .catch((error) => {
+      res.sendStatus(500);
     });
 });
 
@@ -374,36 +401,36 @@ module.exports = router;
 // })
 
 // router.post("/transaction", rejectUnauthenticated, async (req, res) => {
-    //   console.log("/transaction/residents");
-    //   console.log("is authenticated?", req.isAuthenticated());
-    //   console.log("user", req.user);
-    //   console.log(req.body);
-    
-    //   try {
-    //     const { transaction_id, resident_id } = req.body;
-    
-    //     // Insert into transaction_residents
-    //     await pool.query(
-    //       `
-    //             INSERT INTO "transaction_residents" ("transaction_id", "resident_id")
-    //             VALUES ($1, $2)
-    //             ON CONFLICT DO NOTHING;
-    //             `,
-    //       [transaction_id, resident_id]
-    //     );
-    
-    //     await pool.query(
-    //       `
-    //             UPDATE "transaction_residents"
-    //             SET "date" = NOW()
-    //             WHERE "transaction_id" = $1 AND "resident_id" = $2 AND "date" IS NULL;
-    //             `,
-    //       [transaction_id, resident_id]
-    //     );
-    
-    //     res.sendStatus(201);
-    //   } catch (err) {
-    //     console.error(err);
-    //     res.sendStatus(500);
-    //   }
-    // });
+//   console.log("/transaction/residents");
+//   console.log("is authenticated?", req.isAuthenticated());
+//   console.log("user", req.user);
+//   console.log(req.body);
+
+//   try {
+//     const { transaction_id, resident_id } = req.body;
+
+//     // Insert into transaction_residents
+//     await pool.query(
+//       `
+//             INSERT INTO "transaction_residents" ("transaction_id", "resident_id")
+//             VALUES ($1, $2)
+//             ON CONFLICT DO NOTHING;
+//             `,
+//       [transaction_id, resident_id]
+//     );
+
+//     await pool.query(
+//       `
+//             UPDATE "transaction_residents"
+//             SET "date" = NOW()
+//             WHERE "transaction_id" = $1 AND "resident_id" = $2 AND "date" IS NULL;
+//             `,
+//       [transaction_id, resident_id]
+//     );
+
+//     res.sendStatus(201);
+//   } catch (err) {
+//     console.error(err);
+//     res.sendStatus(500);
+//   }
+// });

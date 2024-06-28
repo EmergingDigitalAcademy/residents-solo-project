@@ -65,7 +65,7 @@ function AddRemoveAllergies() {
           <Card style={{ border: "0" }}>
             <Card.Body>
               <Card.Title>Type of Allergies</Card.Title>
-              <ListGroup style={{width: "200px"}}>
+              <ListGroup style={{ width: "200px" }}>
                 {allergiesReducer.map((allergy, i) => (
                   <div key={i}>
                     <ListGroup.Item className="listgrouptype">
