@@ -35,7 +35,7 @@ function ActiveResidents() {
               <div className="active-residents" key={i}>
                 <Card
                   className="cardActiveResident"
-                  style={{ width: "200px", height: "auto", backgroundColor: allComplete(resident) ? "green" : "white" }}
+                  style={{ width: "200px", height: "auto", backgroundColor: allComplete(resident) ? "lightgreen" : "white" }}
                 >
                   <div>
                     <Card.Body

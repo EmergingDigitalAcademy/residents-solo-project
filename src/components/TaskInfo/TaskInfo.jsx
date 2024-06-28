@@ -78,7 +78,7 @@ function TaskInfo() {
         <Col xs="12">
           {assistanceReducer.map((assistance, i) => (
             <div className="container, taskInfoCard" key={assistance.id}>
-              <Card style={{ width: "18rem", backgroundColor: Number(tasksResidents?.filter((k) => Number(k.resident_id) === Number(resident_id))?.find((r) => Number(r.tasks_id) === Number(tasks_id))?.assistance_id) === Number(assistance.id) ? "green" : "white"}}>
+              <Card style={{ width: "18rem", backgroundColor: Number(tasksResidents?.filter((k) => Number(k.resident_id) === Number(resident_id))?.find((r) => Number(r.tasks_id) === Number(tasks_id))?.assistance_id) === Number(assistance.id) ? "lightgreen" : "white"}}>
                 <Card.Body className="taskInfocardbody">
                   <Card.Text
                     onClick={() => handleUpdateTask(assistance.id, params)}

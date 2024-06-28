@@ -14,7 +14,7 @@ function TaskDetail({ task, residentId, filteredTasksResidents }) {
           backgroundColor: filteredTasksResidents?.find(
             (r) => Number(r.tasks_id) === Number(task.id)
           )?.assistance_id
-            ? "green"
+            ? "lightgreen"
             : "white",
         }}
       >
