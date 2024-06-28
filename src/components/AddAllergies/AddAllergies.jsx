@@ -4,20 +4,7 @@ import { useDispatch } from "react-redux";
 import { useHistory } from "react-router-dom/cjs/react-router-dom.min";
 import { useParams } from "react-router-dom/cjs/react-router-dom.min";
 import "./AddAllergies.css";
-import {
-  Container,
-  Navbar,
-  Nav,
-  Button,
-  Dropdown,
-  InputGroup,
-  Card,
-  Row,
-  Col,
-  Alert,
-  Modal,
-  ListGroup,
-} from "react-bootstrap";
+import { Card, Row, Col, ListGroup } from "react-bootstrap";
 
 function AddRemoveAllergies() {
   const allergiesReducer = useSelector((store) => store.allergiesReducer);
@@ -67,7 +54,10 @@ function AddRemoveAllergies() {
       <h2 className="AllergyTitle">Allergies</h2>
       <Row>
         <div>
-          <button className="backbtnAllergy" onClick={() => history.push("/residents")}>
+          <button
+            className="backbtnAllergy"
+            onClick={() => history.push("/residents")}
+          >
             Back to Active Residents
           </button>
         </div>
@@ -75,13 +65,13 @@ function AddRemoveAllergies() {
           <Card style={{ border: "0" }}>
             <Card.Body>
               <Card.Title>Type of Allergies</Card.Title>
-              <ListGroup >
+              <ListGroup style={{width: "200px"}}>
                 {allergiesReducer.map((allergy, i) => (
                   <div key={i}>
                     <ListGroup.Item className="listgrouptype">
                       <strong>{allergy.type}</strong>
                     </ListGroup.Item>
-                    <ListGroup.Item >
+                    <ListGroup.Item>
                       <div>
                         {residentAllergies.some(
                           (ra) =>

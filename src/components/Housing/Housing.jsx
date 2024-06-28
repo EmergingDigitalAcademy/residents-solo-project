@@ -3,21 +3,8 @@ import { useEffect } from "react";
 import { useDispatch } from "react-redux";
 import { useHistory } from "react-router-dom/cjs/react-router-dom.min";
 import { useParams } from "react-router-dom/cjs/react-router-dom.min";
-import './Housing.css';
-import {
-  Container,
-  Navbar,
-  Nav,
-  Button,
-  Dropdown,
-  InputGroup,
-  Card,
-  Row,
-  Col,
-  Alert,
-  Modal,
-  ListGroup,
-} from "react-bootstrap";
+import "./Housing.css";
+import { Card, Row, Col, ListGroup } from "react-bootstrap";
 
 function AssignResident() {
   const housing = useSelector((store) => store.housingReducer);
@@ -44,15 +31,18 @@ function AssignResident() {
       <h2 className="housingtitle">Housing</h2>
       <Row>
         <div>
-          <button className="backbtnHousing" onClick={() => history.push("/residents")}>
+          <button
+            className="backbtnHousing"
+            onClick={() => history.push("/residents")}
+          >
             Back to Active Residents
           </button>
         </div>
         <Col xs={12} md={6}>
-          <Card style={{border: "0"}}>
+          <Card style={{ border: "0" }}>
             <Card.Body>
               <Card.Title>Available Rooms</Card.Title>
-              <ListGroup style={{width: "500px"}}>
+              <ListGroup style={{ width: "500px" }}>
                 {housing
                   .filter((h) => !h.resident_id)
                   .map((house, i) => (
@@ -61,8 +51,9 @@ function AssignResident() {
                         <div>
                           <strong>Room Number:</strong> {house.room_number},
                           <strong> Hall:</strong> {house.hall},
-                          <strong> Floor:</strong> {house.floor} 
-                          <button className="assignroombtn"
+                          <strong> Floor:</strong> {house.floor}
+                          <button
+                            className="assignroombtn"
                             onClick={() => handleAssignRoom(house.room_number)}
                           >
                             Assign Room

@@ -6,20 +6,7 @@ import { useParams } from "react-router-dom/cjs/react-router-dom.min";
 import TaskDetail from "./TaskDetail";
 import "./ResidentInfo.css";
 import moment from "moment";
-import {
-  Container,
-  Navbar,
-  Nav,
-  Button,
-  Dropdown,
-  InputGroup,
-  Card,
-  Row,
-  Col,
-  Alert,
-  Modal,
-  ListGroup,
-} from "react-bootstrap";
+import { Card, Row, Col } from "react-bootstrap";
 
 function ResidentInfo() {
   const residents = useSelector((store) => store.residentsReducer);
@@ -64,7 +51,9 @@ function ResidentInfo() {
                 <Card.Img
                   style={{ width: "200px", height: "200px" }}
                   variant="top"
-                  src={ resident[0].image ?? "/images/default-profile-picture.jpg"}
+                  src={
+                    resident[0].image ?? "/images/default-profile-picture.jpg"
+                  }
                 />
                 <Card.Body className="residentInfoText">
                   <Card.Text className="residentInfoName">

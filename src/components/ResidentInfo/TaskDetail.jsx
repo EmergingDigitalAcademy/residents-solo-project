@@ -34,17 +34,3 @@ function TaskDetail({ task, residentId, filteredTasksResidents }) {
 }
 
 export default TaskDetail;
-
-/*
-<div className="container">
-         {tasksResidents.filter((t) => Number(t.resident_id) === Number(id)).map((task, i) => <div key={i}>
-         <Card style={{ width: '18rem', backgroundColor: task.assistance_id ? 'green' : 'white'}}>
-            <Card.Body>
-                    <Card.Text>{task.assistance_id}</Card.Text>
-            </Card.Body>
-         </Card>
-         </div>
-        )
-    }
-    </div>
-*/

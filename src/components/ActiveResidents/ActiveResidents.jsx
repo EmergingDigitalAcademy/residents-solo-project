@@ -15,14 +15,16 @@ function ActiveResidents() {
 
   useEffect(() => {
     dispatch({ type: "FETCH_RESIDENTS" });
-    dispatch({ type: "FETCH_TASKS_RESIDENTS" })
+    dispatch({ type: "FETCH_TASKS_RESIDENTS" });
   }, []);
 
   const allComplete = (res) => {
-    const tasksByResident = tasksResidents?.filter((s) => Number(s.resident_id) === Number(res.id));
+    const tasksByResident = tasksResidents?.filter(
+      (s) => Number(s.resident_id) === Number(res.id)
+    );
     const allTrue = tasksByResident.every((g) => g.assistance_id);
     return allTrue;
-  }
+  };
 
   return (
     <div className="container">
@@ -35,7 +37,13 @@ function ActiveResidents() {
               <div className="active-residents" key={i}>
                 <Card
                   className="cardActiveResident"
-                  style={{ width: "200px", height: "auto", backgroundColor: allComplete(resident) ? "lightgreen" : "white" }}
+                  style={{
+                    width: "200px",
+                    height: "auto",
+                    backgroundColor: allComplete(resident)
+                      ? "lightgreen"
+                      : "white",
+                  }}
                 >
                   <div>
                     <Card.Body
@@ -44,10 +52,14 @@ function ActiveResidents() {
                         history.push(`/tasks/${resident.id}`);
                       }}
                     >
-                      <Card.Img className="active-resident-img"
+                      <Card.Img
+                        className="active-resident-img"
                         id="active-resident-img"
                         variant="top"
-                        src={resident.image ?? "/images/default-profile-picture.jpg"}
+                        src={
+                          resident.image ??
+                          "/images/default-profile-picture.jpg"
+                        }
                       />
                     </Card.Body>
                     <Card.Body
@@ -56,9 +68,13 @@ function ActiveResidents() {
                       }}
                     >
                       <Card.Text>
-                        <strong>{resident.first_name} {resident.last_name}</strong>
+                        <strong>
+                          {resident.first_name} {resident.last_name}
+                        </strong>
                       </Card.Text>
-                      <Card.Text><strong>Room ID:</strong> {resident.room_number}</Card.Text>
+                      <Card.Text>
+                        <strong>Room ID:</strong> {resident.room_number}
+                      </Card.Text>
                       <Card.Text>
                         <strong>Birthday:</strong>{" "}
                         {moment(resident.birthday).format("MM/DD/YYYY")}
