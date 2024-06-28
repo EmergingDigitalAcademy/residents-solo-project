@@ -52,7 +52,7 @@ function AssignResident() {
           <Card style={{border: "0"}}>
             <Card.Body>
               <Card.Title>Available Rooms</Card.Title>
-              <ListGroup >
+              <ListGroup style={{width: "500px"}}>
                 {housing
                   .filter((h) => !h.resident_id)
                   .map((house, i) => (
