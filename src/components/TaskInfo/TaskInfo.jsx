@@ -51,7 +51,7 @@ function TaskInfo() {
 
   return (
     <div className="container">
-      <h2 className="taskInfoTitle">Assistance Info</h2>
+      <h2 className="taskInfoTitle">Assistance Level</h2>
       <Row>
         <Col xs="12">
           <div className="container">

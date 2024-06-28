@@ -55,7 +55,7 @@ function ResidentInfo() {
 
   return (
     <div className="container">
-      <h2 className="residentInfoTitle">Resident Info</h2>
+      <h2 className="residentInfoTitle">Resident Tasks</h2>
       <Row className="mb-4">
         <Col xs="12">
           <div className="container">
@@ -71,7 +71,7 @@ function ResidentInfo() {
                     {resident[0]?.first_name} {resident[0]?.last_name}
                   </Card.Text>
                   <Card.Text className="residentInfoID">
-                    <strong>ID:</strong> {resident[0]?.room_number}
+                    <strong>Room ID:</strong> {resident[0]?.room_number}
                   </Card.Text>
                   <Card.Text className="residentInfoAllergy">
                     <strong>Allergies:</strong> {resident[0]?.allergies}
